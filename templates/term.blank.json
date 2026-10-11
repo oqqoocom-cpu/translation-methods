@@ -1,0 +1,17 @@
+{
+  "template_status": "draft-template",
+  "term_id": null,
+  "category": null,
+  "source_form": null,
+  "source_language": null,
+  "native_script": null,
+  "transliteration": null,
+  "candidate_zh": null,
+  "scope": {"level": null, "region": null, "period": null, "usage": null},
+  "status": "candidate",
+  "evidence": [],
+  "decision_id": null,
+  "decision_reason": null,
+  "verified_at": null,
+  "synthetic": false
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["project_id", "phase", "registry_version", "registry_sha256", "hash_algorithm", "rules"],
+  "properties": {
+    "project_id": {"$ref": "common.schema.json#/$defs/id"},
+    "phase": {"enum": ["intake", "pilot-release", "full-translation", "layout", "delivery"]},
+    "registry_version": {"$ref": "common.schema.json#/$defs/text"},
+    "registry_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "hash_algorithm": {"const": "canonical-json-v1"},
+    "rules": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "applicability", "acceptance"],
+        "properties": {
+          "id": {"$ref": "common.schema.json#/$defs/id"},
+          "applicability": {"enum": ["pending", "applicable", "not-applicable", "exception"]},
+          "acceptance": {"enum": ["pending", "passed", "failed"]},
+          "reason": {"$ref": "common.schema.json#/$defs/text"},
+          "decision_id": {"$ref": "common.schema.json#/$defs/id"},
+          "evidence": {"$ref": "common.schema.json#/$defs/evidence"}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"applicability": {"enum": ["not-applicable", "exception"]}}},
+            "then": {"required": ["reason", "decision_id"]}
+          },
+          {
+            "if": {"properties": {"acceptance": {"const": "passed"}}},
+            "then": {
+              "required": ["evidence"],
+              "properties": {"applicability": {"enum": ["applicable", "not-applicable", "exception"]}}
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "decision_id": "DEC-DEMO-001",
+  "status": "accepted",
+  "reason": "仅演示裁决与回归的关联；保持源文称谓与规范字段分离。",
+  "affected_units": ["UNIT-DEMO-001"],
+  "evidence": [{"evidence_id": "EVID-DEMO-001", "kind": "synthetic", "locator": "虚构核验材料", "checked_at": "2026-10-11"}],
+  "regression_refs": ["REG-DEMO-001"],
+  "decided_by": "虚构演示角色",
+  "decided_at": "2026-10-11",
+  "synthetic": true
+}

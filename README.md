@@ -1,0 +1,50 @@
+# 通用翻译方法与工具
+
+版本：0.3.0。仓库名称：`translation-methods`。许可证状态：暂未附开源许可证。
+
+本库整理可复用的翻译工作流、术语管理、质量控制、译审提示词、记录模板与检查工具，面向一般文档、技术资料、商务文本、文学与学术材料等翻译任务，不限于学术翻译。
+
+短文本、批量文档和长篇书籍按体量、风险与用途选择流程；书籍研究辅助层和印刷交付是特定场景，不是所有项目的必选项。提示词可填写源语与目标语，部分文档以中文译入和书籍处理为例。这些适用场景不代表本库已经对所有语种、文体或文件格式完成效果验证。
+
+它不是自动翻译产品，不含任何实际项目的原文、译文、页图、翻译记忆、专家意见或模型调用日志。示例全部为人为编写的虚构记录，不用于证明翻译质量。
+
+## 方法入口
+
+首次阅读从 [快速上手](QUICKSTART.md) 开始，再按当前阶段查阅下列文档。
+
+- [定位与边界](docs/01_项目定位与边界.md)
+- [生命周期与阶段放行](docs/02_项目生命周期.md)
+- [术语与实体治理](docs/03_术语与实体治理.md)
+- [质量控制与回归](docs/04_质量控制与回归.md)
+- [多模型协作](docs/05_多模型协作.md)
+- [数据结构与目录](docs/06_数据模型与目录.md)
+- [排版与交付](docs/07_排版与交付.md)
+- [受控修改与续接](docs/08_受控修改与续接.md)
+- [权利、隐私与发布](docs/09_权利隐私与发布.md)
+- [技术复盘与失败模式](docs/10_技术复盘与失败模式.md)
+- [项目目录整理](docs/11_项目目录整理.md)
+- [通用译审提示词](templates/translation-prompts.md)
+- [规则注册表](registry/public.registry.json)
+- [第三方参考](REFERENCES.md)
+
+## 工具范围
+
+要求 Python 3.10 或更高版本，结构验证依赖 `jsonschema`。工具只验证结构和部分状态约束，不能核实权威来源、专家能力或语义正确性，也不能自动授予翻译、传播或调用外部服务的权限。
+
+```powershell
+python -m pip install -r requirements.txt
+python -B -m unittest discover -s tests -v
+python -B tools/validate_assets.py
+python -B tools/check_release.py
+python -B tools/sync_registry.py registry/public.registry.json --markdown generated/registry.md --snapshot generated/application.json --project-id DEMO-NEW --phase intake
+```
+
+输出必须是尚不存在的新文件。规则同步快照中的 `pending` 是“待验收”，不是已通过。工具不会调用云端翻译服务，也不提供 API 密钥配置。
+
+## 发布边界
+
+发布以逐文件白名单为准，不从私有工作区直接建立公开仓库。发布清单记录本目录的全部交付文件和校验值；清单不包含自身哈希，以免循环计算。审计记录留在私有整理区。
+
+目录只包含通用方法内容，可在本地初始化全新的独立 Git；不得导入任何私有项目的 Git 历史。暂存内容可用 `python -B tools/check_release.py --staged` 核验；该检查不审查完整提交历史，不能用于把旧私有仓库转为公开。
+
+首次远端发布流程见 [发布准备](PUBLICATION.md)。本库未完成许可证选择，也未声称已建成专家基准集、已实现原书全自动翻译或已优于某个翻译平台。详见 [许可证状态](LICENSE-STATUS.md) 与 [发布检查表](RELEASE-CHECKLIST.md)。

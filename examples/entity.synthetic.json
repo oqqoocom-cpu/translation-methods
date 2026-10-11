@@ -1,0 +1,15 @@
+{
+  "entity_id": "ENT-DEMO-001",
+  "entity_type": "institution",
+  "source_label": "North Orchard Council",
+  "native_name": "",
+  "official_name": "North Orchard Coordination Council",
+  "candidate_zh": "北园议事会",
+  "scope": {"level": "project", "region": "虚构地区", "period": "虚构时期", "usage": "双轨名称示范"},
+  "variants": [{"form": "NOC", "relation": "abbreviation"}],
+  "relations": [],
+  "official_status": "verified",
+  "evidence": [{"evidence_id": "EVID-DEMO-002", "kind": "synthetic", "locator": "人为编写，不存在此官方机构", "checked_at": "2026-10-11"}],
+  "decision_id": "DEC-DEMO-001",
+  "synthetic": true
+}

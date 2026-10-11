@@ -1,0 +1,14 @@
+{
+  "status": "draft-template",
+  "project_id": null,
+  "target_level": null,
+  "source_provenance": null,
+  "source_file_hashes": [],
+  "usage_boundary": null,
+  "confidentiality": null,
+  "external_service_permissions": [],
+  "task_specification": null,
+  "pilot_risk_coverage": [],
+  "registry_application": null,
+  "approved_by": null
+}

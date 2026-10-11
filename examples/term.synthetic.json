@@ -1,0 +1,18 @@
+{
+  "term_id": "TERM-DEMO-001",
+  "category": "concept",
+  "source_form": "shared orchard rule",
+  "source_language": "en",
+  "native_script": "",
+  "transliteration": "",
+  "candidate_zh": "共用果园规则",
+  "scope": {"level": "project", "region": "虚构地区", "period": "虚构时期", "usage": "仅演示字段，不可进入真实术语库"},
+  "author_specific_usage": true,
+  "alternatives": ["共享果园规则"],
+  "status": "locked",
+  "evidence": [{"evidence_id": "EVID-DEMO-001", "kind": "synthetic", "locator": "虚构术语裁决，不对应任何文献", "checked_at": "2026-10-11"}],
+  "decision_reason": "人为编写的锁定示范，不代表权威译名。",
+  "decision_id": "DEC-DEMO-001",
+  "verified_at": "2026-10-11",
+  "synthetic": true
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "registry_version", "purpose", "requirements"],
+  "properties": {
+    "schema_version": {"const": "0.2"},
+    "registry_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-z0-9-]+)?$"},
+    "purpose": {"$ref": "common.schema.json#/$defs/text"},
+    "requirements": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "category", "title", "scope", "strength", "status", "requirement", "verification"],
+        "properties": {
+          "id": {"$ref": "common.schema.json#/$defs/id"},
+          "category": {"$ref": "common.schema.json#/$defs/text"},
+          "title": {"$ref": "common.schema.json#/$defs/text"},
+          "scope": {"enum": ["global", "project", "benchmark", "internal-publication"]},
+          "strength": {"enum": ["mandatory", "mandatory-when-applicable", "required-for-b-or-higher"]},
+          "status": {"enum": ["active", "retired"]},
+          "condition": {"$ref": "common.schema.json#/$defs/text"},
+          "requirement": {"$ref": "common.schema.json#/$defs/text"},
+          "verification": {"$ref": "common.schema.json#/$defs/text"}
+        },
+        "allOf": [{
+          "if": {"properties": {"strength": {"enum": ["mandatory-when-applicable", "required-for-b-or-higher"]}}},
+          "then": {"required": ["condition"]}
+        }]
+      }
+    }
+  }
+}

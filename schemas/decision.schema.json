@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["decision_id", "status", "reason", "affected_units", "evidence", "decided_by", "decided_at", "synthetic"],
+  "properties": {
+    "decision_id": {"$ref": "common.schema.json#/$defs/id"},
+    "status": {"enum": ["held", "accepted", "rejected"]},
+    "reason": {"$ref": "common.schema.json#/$defs/text"},
+    "affected_units": {"$ref": "common.schema.json#/$defs/ids"},
+    "evidence": {"$ref": "common.schema.json#/$defs/evidence"},
+    "regression_refs": {"$ref": "common.schema.json#/$defs/ids"},
+    "decided_by": {"$ref": "common.schema.json#/$defs/text"},
+    "decided_at": {"type": "string", "format": "date"},
+    "synthetic": {"type": "boolean"}
+  },
+  "allOf": [{
+    "if": {"properties": {"status": {"const": "accepted"}}},
+    "then": {"required": ["regression_refs"]}
+  }]
+}

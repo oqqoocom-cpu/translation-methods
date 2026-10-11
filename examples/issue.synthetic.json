@@ -1,0 +1,16 @@
+{
+  "issue_id": "ISS-DEMO-001",
+  "severity": "major",
+  "category": "terminology",
+  "status": "closed",
+  "affected_units": ["UNIT-DEMO-001"],
+  "affected_versions": ["demo-draft-1"],
+  "description": "虚构例子中的候选译名未经裁决就进入成稿。",
+  "root_cause": "示范程序误把候选状态视为锁定状态。",
+  "fix_version": "demo-draft-2",
+  "regression_refs": ["REG-DEMO-001"],
+  "regression_status": "passed",
+  "closed_by": "虚构演示角色",
+  "closed_at": "2026-10-11",
+  "synthetic": true
+}

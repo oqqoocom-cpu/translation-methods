@@ -1,0 +1,232 @@
+{
+  "version": "0.3.0",
+  "scope": "generic-methods-only",
+  "self_excluded": true,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "da5597c9e16cdf85da43707240c98becca5d92d823af9d3525d1dcd8b6499755",
+      "size_bytes": 88
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "a1cdb17b51974438eac5bceed67fc6d0913c8ddbb26f295137526f9360bc28e6",
+      "size_bytes": 196
+    },
+    {
+      "path": "LICENSE-STATUS.md",
+      "sha256": "5a9f448011a30c58886ed497737576acad1b936cabc9bd6365470abcbf4e28bf",
+      "size_bytes": 647
+    },
+    {
+      "path": "PUBLICATION.md",
+      "sha256": "b8215379676ca476596c202c2e654e1ba234a62e5ada2bab3e6ff7ef7cb8b557",
+      "size_bytes": 1784
+    },
+    {
+      "path": "QUICKSTART.md",
+      "sha256": "efd078e2e872f8fef97bb8a437a37b88a543b46da2c893ad256a4ba485d448c2",
+      "size_bytes": 3118
+    },
+    {
+      "path": "README.md",
+      "sha256": "4af2bf9d82370cad4ced5eaba748448cd5142540e07e2a0056f852aea7e8b453",
+      "size_bytes": 3463
+    },
+    {
+      "path": "REFERENCES.md",
+      "sha256": "3f3c491273ead60b229c2dd4921a12ae931ae4044463ae3e3c5a8d01664baba2",
+      "size_bytes": 2943
+    },
+    {
+      "path": "RELEASE-CHECKLIST.md",
+      "sha256": "cc16d12b788ddaf87dc45449dccedd05fcb5f26b0e51317d1c2eeb8c38cf60fe",
+      "size_bytes": 1610
+    },
+    {
+      "path": "docs/01_项目定位与边界.md",
+      "sha256": "b142d1d590ec60c314f0b1351ce50c31cfed1509343b49c7462209c8bbe91298",
+      "size_bytes": 1764
+    },
+    {
+      "path": "docs/02_项目生命周期.md",
+      "sha256": "5304af342ee59dc452f82589ddb1ea6d5944b4105cd25a47d699bc6489e4c2e4",
+      "size_bytes": 2454
+    },
+    {
+      "path": "docs/03_术语与实体治理.md",
+      "sha256": "bfc1423204520859acfc34c18eaf32e6e202c8728c29629ecd27afc052ea6fd5",
+      "size_bytes": 2068
+    },
+    {
+      "path": "docs/04_质量控制与回归.md",
+      "sha256": "dc7bb50fd2551c493b59feb743717c0130f0e86714aafa54c06b8f6170c5f300",
+      "size_bytes": 2923
+    },
+    {
+      "path": "docs/05_多模型协作.md",
+      "sha256": "e73b90f35894cb33610b50292c3ea8475bc32daecc765aad46a09c63b3a121e3",
+      "size_bytes": 2223
+    },
+    {
+      "path": "docs/06_数据模型与目录.md",
+      "sha256": "bd66357164d75b00a9a21103d47ff149f665bc16d3fffe5678ecf0fdef1ccb57",
+      "size_bytes": 1752
+    },
+    {
+      "path": "docs/07_排版与交付.md",
+      "sha256": "026693b000c9f55222934184ce7b2e29bf2abd75c593a4e687632523ce20ba3c",
+      "size_bytes": 2045
+    },
+    {
+      "path": "docs/08_受控修改与续接.md",
+      "sha256": "0e3cec803a91c27c478544a475eedcbf56f52044550ff4459bbdfd1660a8e14f",
+      "size_bytes": 1579
+    },
+    {
+      "path": "docs/09_权利隐私与发布.md",
+      "sha256": "4a5794ecf29926d4608d9fd46cf5ba67b61470c0456417fa020abba4822dfd54",
+      "size_bytes": 1508
+    },
+    {
+      "path": "docs/10_技术复盘与失败模式.md",
+      "sha256": "28599b5c318a63a4b35082ea56cf045c01f5b1f1788e5c93c14bed0b78ebfb06",
+      "size_bytes": 2897
+    },
+    {
+      "path": "docs/11_项目目录整理.md",
+      "sha256": "1364e3d52e55eafda920fe85850ea9d977ed28a730e1d40683777511702b0d8e",
+      "size_bytes": 2126
+    },
+    {
+      "path": "examples/application.synthetic.json",
+      "sha256": "5552550a37d2bb5d1d14811dee5be551eb9c8349e037c980cdfdb12ea6922974",
+      "size_bytes": 2975
+    },
+    {
+      "path": "examples/decision.synthetic.json",
+      "sha256": "17180ec3110509b9503f50861ac600cff548817d9b70ed3224d537ce9251b871",
+      "size_bytes": 453
+    },
+    {
+      "path": "examples/entity.synthetic.json",
+      "sha256": "247cac105a91cec67293faaf41d20527292f3a06d2ea8d668e9f9073c56c719e",
+      "size_bytes": 660
+    },
+    {
+      "path": "examples/issue.synthetic.json",
+      "sha256": "a8df56601940135dd4aa1f6261bba9b3eeff05f58c98be0d91299e932f7c114c",
+      "size_bytes": 531
+    },
+    {
+      "path": "examples/quality-report.synthetic.json",
+      "sha256": "e69b1d550d380d3b150c8e255a4b08fc6f7f5adb6ac3959cc63581accdbb685e",
+      "size_bytes": 1540
+    },
+    {
+      "path": "examples/term.synthetic.json",
+      "sha256": "e05ac10ffb59805ac995dc4f280164c9978f3fabbf1ecc01b0e23b5fd88703b2",
+      "size_bytes": 773
+    },
+    {
+      "path": "registry/public.registry.json",
+      "sha256": "a397eb07f244f8465efc70ac8155f719a83f0182ad1e6b508821dd6e9c2c6199",
+      "size_bytes": 16834
+    },
+    {
+      "path": "registry/public.registry.md",
+      "sha256": "e09af4f02c597543cd5d9a9b73066cc0958206760c5d0178e3ae6ef5ef94c493",
+      "size_bytes": 12362
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "4046ca1e3a64f4ea791fb4fb3d8566242086ff1c8e2431e2c349e1052ffc6ba0",
+      "size_bytes": 20
+    },
+    {
+      "path": "schemas/application.schema.json",
+      "sha256": "3e68c7ffcda930b574518464b7e2c34919d4d7f83c4b0dd7ae46b5f4d483e9bb",
+      "size_bytes": 1730
+    },
+    {
+      "path": "schemas/common.schema.json",
+      "sha256": "0b0cdb1f091f129a260c5527e368cac978793e8c2baa2fcc12e9e11bfbf833d5",
+      "size_bytes": 1167
+    },
+    {
+      "path": "schemas/decision.schema.json",
+      "sha256": "97ccf76af120c0eb1a01b836bcb43c11f4eadd82f343baf5092c77b6f66b778d",
+      "size_bytes": 914
+    },
+    {
+      "path": "schemas/entity.schema.json",
+      "sha256": "535f98e75549c385cda30cac46ca2811202395a5add85291d55b7b71f0d5d41d",
+      "size_bytes": 1825
+    },
+    {
+      "path": "schemas/issue.schema.json",
+      "sha256": "4f61193bf74e581382f5dbb61c0171f7ebcacd11de893eb43c679b6647957591",
+      "size_bytes": 1687
+    },
+    {
+      "path": "schemas/quality-report.schema.json",
+      "sha256": "73b5022d91246ba0e67fc8df1d89e9a8fc29a0dc47db70e1341168ffbfd3671e",
+      "size_bytes": 1967
+    },
+    {
+      "path": "schemas/registry.schema.json",
+      "sha256": "31e5d71ed0cd00eb302b4c38e42322d08b955dc3f20bf73fcf71dcfc669aab79",
+      "size_bytes": 1543
+    },
+    {
+      "path": "schemas/term.schema.json",
+      "sha256": "4e8f79459444cdce05e758e405313e56d1154d1b683e73aceba4b2ceede2c0c1",
+      "size_bytes": 1708
+    },
+    {
+      "path": "templates/project-intake.blank.json",
+      "sha256": "4e34dd657f5ef88a29b84faab3747c6ad92db4a40987d96e338064755d453e2c",
+      "size_bytes": 341
+    },
+    {
+      "path": "templates/recovery.blank.json",
+      "sha256": "541c744a0797c3561f0f1b7b27963f9725318975b00adc5f6025d7f052cf8052",
+      "size_bytes": 364
+    },
+    {
+      "path": "templates/term.blank.json",
+      "sha256": "551bc34efdcaddea559e8df72e9d30ffbd785964caddcc6727f61850ac0d1f0d",
+      "size_bytes": 420
+    },
+    {
+      "path": "templates/translation-prompts.md",
+      "sha256": "0526c22971c384407ab7c8db77e678425765f2e69b41c546763d4ce36a533de9",
+      "size_bytes": 2956
+    },
+    {
+      "path": "tests/test_public_assets.py",
+      "sha256": "c458c2aeb9f109273245f57693a5d844525ae3fcc993813be0072aab5fd1fede",
+      "size_bytes": 13967
+    },
+    {
+      "path": "tests/test_release.py",
+      "sha256": "8b4b40dc7807976342990adf8977ac72108416b5ea7844dfe187e4ccf11c99b4",
+      "size_bytes": 4592
+    },
+    {
+      "path": "tools/check_release.py",
+      "sha256": "b7d6e18cfafa053a38ca5181f1298576617f16564a45baaee53713e1dfd799cd",
+      "size_bytes": 6205
+    },
+    {
+      "path": "tools/sync_registry.py",
+      "sha256": "96d0435b9fd3048c9f27aeb21a7d9a8354fda5ae2965674ccabcd031395f2eca",
+      "size_bytes": 4417
+    },
+    {
+      "path": "tools/validate_assets.py",
+      "sha256": "886959d0d4f996167d97831899a11c4fa71f70a148db66c9b2a789063b6135a7",
+      "size_bytes": 5829
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "report_id": "QA-DEMO-001",
+  "target_version": "demo-draft-2",
+  "status": "passed",
+  "synthetic": true,
+  "independent_review": true,
+  "open_critical": 0,
+  "open_major": 0,
+  "unresolved_high_risk": 0,
+  "high_risk_total": 1,
+  "high_risk_reviewed": 1,
+  "protected_total": 2,
+  "protected_checked": 2,
+  "limitations": ["全部数字和证据均为虚构，只演示结构；不证明任何真实翻译通过。"],
+  "checks": [
+    {"check_id": "STRUCTURE", "status": "passed", "evidence": [{"evidence_id": "EVID-DEMO-003", "kind": "synthetic", "locator": "虚构结构检查", "checked_at": "2026-10-11"}]},
+    {"check_id": "PROTECTED", "status": "passed", "evidence": [{"evidence_id": "EVID-DEMO-004", "kind": "synthetic", "locator": "虚构保护要素检查", "checked_at": "2026-10-11"}]},
+    {"check_id": "HIGH-RISK", "status": "passed", "evidence": [{"evidence_id": "EVID-DEMO-005", "kind": "synthetic", "locator": "虚构高风险复核", "checked_at": "2026-10-11"}]},
+    {"check_id": "TERMS", "status": "passed", "evidence": [{"evidence_id": "EVID-DEMO-006", "kind": "synthetic", "locator": "虚构术语检查", "checked_at": "2026-10-11"}]},
+    {"check_id": "FIDELITY", "status": "passed", "evidence": [{"evidence_id": "EVID-DEMO-007", "kind": "synthetic", "locator": "虚构独立忠实度复查", "checked_at": "2026-10-11"}]},
+    {"check_id": "LAYOUT", "status": "passed", "evidence": [{"evidence_id": "EVID-DEMO-008", "kind": "synthetic", "locator": "虚构版式复查", "checked_at": "2026-10-11"}]}
+  ]
+}

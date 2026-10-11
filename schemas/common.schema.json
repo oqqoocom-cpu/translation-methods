@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Z][A-Z0-9_-]{2,63}$"},
+    "text": {"type": "string", "pattern": "\\S"},
+    "ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["level", "region", "period", "usage"],
+      "properties": {
+        "level": {"enum": ["global", "project", "author"]},
+        "region": {"$ref": "#/$defs/text"},
+        "period": {"$ref": "#/$defs/text"},
+        "usage": {"$ref": "#/$defs/text"}
+      }
+    },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["evidence_id", "kind", "locator", "checked_at"],
+        "properties": {
+          "evidence_id": {"$ref": "#/$defs/id"},
+          "kind": {"enum": ["official", "scholarly", "source-image", "expert", "regression", "synthetic"]},
+          "locator": {"$ref": "#/$defs/text"},
+          "checked_at": {"type": "string", "format": "date"}
+        }
+      }
+    }
+  }
+}

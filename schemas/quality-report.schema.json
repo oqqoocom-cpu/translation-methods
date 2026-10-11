@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["report_id", "target_version", "status", "synthetic", "independent_review", "checks", "open_critical", "open_major", "unresolved_high_risk", "high_risk_total", "high_risk_reviewed", "protected_total", "protected_checked", "limitations"],
+  "properties": {
+    "report_id": {"$ref": "common.schema.json#/$defs/id"},
+    "target_version": {"$ref": "common.schema.json#/$defs/text"},
+    "status": {"enum": ["pending", "failed", "passed"]},
+    "synthetic": {"type": "boolean"},
+    "independent_review": {"type": "boolean"},
+    "open_critical": {"type": "integer", "minimum": 0},
+    "open_major": {"type": "integer", "minimum": 0},
+    "unresolved_high_risk": {"type": "integer", "minimum": 0},
+    "high_risk_total": {"type": "integer", "minimum": 0},
+    "high_risk_reviewed": {"type": "integer", "minimum": 0},
+    "protected_total": {"type": "integer", "minimum": 0},
+    "protected_checked": {"type": "integer", "minimum": 0},
+    "limitations": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "checks": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["check_id", "status", "evidence"],
+        "properties": {
+          "check_id": {"$ref": "common.schema.json#/$defs/id"},
+          "status": {"enum": ["pending", "failed", "passed"]},
+          "evidence": {"$ref": "common.schema.json#/$defs/evidence"}
+        }
+      }
+    }
+  },
+  "allOf": [{
+    "if": {"properties": {"status": {"const": "passed"}}},
+    "then": {
+      "properties": {
+        "independent_review": {"const": true},
+        "open_critical": {"const": 0}, "open_major": {"const": 0},
+        "unresolved_high_risk": {"const": 0},
+        "checks": {"items": {"properties": {"status": {"const": "passed"}}}}
+      }
+    }
+  }]
+}

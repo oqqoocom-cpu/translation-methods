@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["entity_id", "entity_type", "source_label", "scope", "variants", "relations", "official_status", "synthetic"],
+  "properties": {
+    "entity_id": {"$ref": "common.schema.json#/$defs/id"},
+    "entity_type": {"enum": ["person", "place", "institution", "historical_entity", "work", "title", "other"]},
+    "source_label": {"$ref": "common.schema.json#/$defs/text"},
+    "native_name": {"type": "string"},
+    "official_name": {"$ref": "common.schema.json#/$defs/text"},
+    "candidate_zh": {"$ref": "common.schema.json#/$defs/text"},
+    "scope": {"$ref": "common.schema.json#/$defs/scope"},
+    "official_status": {"enum": ["not-checked", "disputed", "verified"]},
+    "evidence": {"$ref": "common.schema.json#/$defs/evidence"},
+    "decision_id": {"$ref": "common.schema.json#/$defs/id"},
+    "variants": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false, "required": ["form", "relation"],
+        "properties": {
+          "form": {"$ref": "common.schema.json#/$defs/text"},
+          "relation": {"enum": ["alias", "abbreviation", "historic-name", "transliteration"]}
+        }
+      }
+    },
+    "relations": {
+      "type": "array", "items": {
+        "type": "object", "additionalProperties": false, "required": ["entity_id", "relation"],
+        "properties": {
+          "entity_id": {"$ref": "common.schema.json#/$defs/id"},
+          "relation": {"enum": ["title-of", "part-of", "successor-of", "not-identical-to"]}
+        }
+      }
+    },
+    "synthetic": {"type": "boolean"}
+  },
+  "allOf": [{
+    "if": {"properties": {"official_status": {"const": "verified"}}},
+    "then": {"required": ["official_name", "evidence", "decision_id"]}
+  }]
+}

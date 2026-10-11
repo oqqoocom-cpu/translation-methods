@@ -1,0 +1,144 @@
+{
+  "project_id": "DEMO-NEW",
+  "phase": "intake",
+  "registry_version": "0.3.0-draft",
+  "registry_sha256": "a1fd3696e768c3f259ea410c12510b8df8ae53820bdb83a3939a68b860218d30",
+  "hash_algorithm": "canonical-json-v1",
+  "rules": [
+    {
+      "id": "GOV-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "GOV-002",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "GOV-003",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "GOV-004",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "RIGHTS-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "SOURCE-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "PILOT-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "CONTEXT-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "TRANS-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "REVIEW-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "TERM-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "TERM-002",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "TERM-003",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "MULTI-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "MULTI-002",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "MULTI-003",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "QA-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "QA-002",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "QA-003",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "MODEL-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "BENCH-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "BENCH-002",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "PRIV-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "RESEARCH-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "PROD-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "PROD-002",
+      "applicability": "pending",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ERROR-001",
+      "applicability": "pending",
+      "acceptance": "pending"
+    }
+  ]
+}

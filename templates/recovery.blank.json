@@ -1,0 +1,16 @@
+{
+  "status": "draft-template",
+  "project_id": null,
+  "goal": null,
+  "canonical_sources": [],
+  "registry_application": null,
+  "formal_stage": null,
+  "frozen_artifacts": [],
+  "open_issues": [],
+  "decisions": [],
+  "downstream_regression": [],
+  "chain_sync_status": "pending",
+  "next_action": null,
+  "prohibited_actions": [],
+  "last_approved_by": null
+}

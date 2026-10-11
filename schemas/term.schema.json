@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["term_id", "category", "source_form", "source_language", "scope", "status", "synthetic"],
+  "properties": {
+    "term_id": {"$ref": "common.schema.json#/$defs/id"},
+    "category": {"enum": ["concept", "person", "place", "institution", "historical_entity", "work", "title", "technical_term", "other"]},
+    "source_form": {"$ref": "common.schema.json#/$defs/text"},
+    "source_language": {"$ref": "common.schema.json#/$defs/text"},
+    "native_script": {"type": "string"},
+    "transliteration": {"type": "string"},
+    "candidate_zh": {"$ref": "common.schema.json#/$defs/text"},
+    "evidence": {"$ref": "common.schema.json#/$defs/evidence"},
+    "scope": {"$ref": "common.schema.json#/$defs/scope"},
+    "author_specific_usage": {"type": "boolean"},
+    "alternatives": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/text"}},
+    "status": {"enum": ["candidate", "under-review", "verified", "locked", "deprecated", "rejected"]},
+    "decision_reason": {"$ref": "common.schema.json#/$defs/text"},
+    "decision_id": {"$ref": "common.schema.json#/$defs/id"},
+    "verified_at": {"type": "string", "format": "date"},
+    "rejection_reason": {"$ref": "common.schema.json#/$defs/text"},
+    "synthetic": {"type": "boolean"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"enum": ["verified", "locked"]}}},
+      "then": {"required": ["candidate_zh", "evidence", "decision_reason", "decision_id", "verified_at"]}
+    },
+    {
+      "if": {"properties": {"status": {"const": "rejected"}}},
+      "then": {"required": ["rejection_reason"]}
+    }
+  ]
+}
