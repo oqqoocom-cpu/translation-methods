@@ -325,6 +325,13 @@ class ToolTests(unittest.TestCase):
 
 
 class PackagingTests(unittest.TestCase):
+    def test_license_map_declares_dual_scope(self):
+        text = (ROOT / "LICENSE.md").read_text(encoding="utf-8")
+        self.assertIn("MIT License", text)
+        self.assertIn("CC BY 4.0", text)
+        self.assertIn("tools/", text)
+        self.assertIn("docs/", text)
+
     def test_manifest_covers_every_file(self):
         result = check_release(ROOT)
         self.assertTrue(result["byte_hashes"])

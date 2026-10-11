@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.3.1",
   "scope": "generic-methods-only",
   "self_excluded": true,
   "files": [
@@ -15,13 +15,28 @@
     },
     {
       "path": "LICENSE-STATUS.md",
-      "sha256": "5a9f448011a30c58886ed497737576acad1b936cabc9bd6365470abcbf4e28bf",
-      "size_bytes": 647
+      "sha256": "80d08a172c451096258380fd3ffcdf7a9d6266e4956048589913f09a04140045",
+      "size_bytes": 786
+    },
+    {
+      "path": "LICENSE.md",
+      "sha256": "1aea453eae9be1824c1bc15e52020d475a0f60d41c81662a44b9f4f7ea0500b4",
+      "size_bytes": 864
+    },
+    {
+      "path": "LICENSES/CC-BY-4.0.txt",
+      "sha256": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94",
+      "size_bytes": 18656
+    },
+    {
+      "path": "LICENSES/MIT.txt",
+      "sha256": "3d2c90234c2462acf922c3eef15ec74795a0d7496d38176339ca91ee9f55e147",
+      "size_bytes": 1069
     },
     {
       "path": "PUBLICATION.md",
-      "sha256": "b8215379676ca476596c202c2e654e1ba234a62e5ada2bab3e6ff7ef7cb8b557",
-      "size_bytes": 1784
+      "sha256": "73c6abf9e455cd8222b03ee07439864048381647aec1099b758170f2a4659827",
+      "size_bytes": 1880
     },
     {
       "path": "QUICKSTART.md",
@@ -30,8 +45,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "4af2bf9d82370cad4ced5eaba748448cd5142540e07e2a0056f852aea7e8b453",
-      "size_bytes": 3463
+      "sha256": "62d5a49dc691dfc0b77c1bf8afc3650c20af585a72a65e1876cb7ef52ac94b68",
+      "size_bytes": 3539
     },
     {
       "path": "REFERENCES.md",
@@ -40,8 +55,8 @@
     },
     {
       "path": "RELEASE-CHECKLIST.md",
-      "sha256": "cc16d12b788ddaf87dc45449dccedd05fcb5f26b0e51317d1c2eeb8c38cf60fe",
-      "size_bytes": 1610
+      "sha256": "921dd7387181eabe77fe4fde2d13d7a6536d79f56bf5857cd9f7448767db6e84",
+      "size_bytes": 1665
     },
     {
       "path": "docs/01_项目定位与边界.md",
@@ -85,8 +100,8 @@
     },
     {
       "path": "docs/09_权利隐私与发布.md",
-      "sha256": "4a5794ecf29926d4608d9fd46cf5ba67b61470c0456417fa020abba4822dfd54",
-      "size_bytes": 1508
+      "sha256": "a28b09700d5219b37aa72dd266cfe1e409325f6224dddee6fbe63e39bb17c765",
+      "size_bytes": 1583
     },
     {
       "path": "docs/10_技术复盘与失败模式.md",
@@ -205,8 +220,8 @@
     },
     {
       "path": "tests/test_public_assets.py",
-      "sha256": "c458c2aeb9f109273245f57693a5d844525ae3fcc993813be0072aab5fd1fede",
-      "size_bytes": 13967
+      "sha256": "954864c9c41998706bddecbe0f0b18d3abdef50ac33123ba793903b5b872b0f4",
+      "size_bytes": 14244
     },
     {
       "path": "tests/test_release.py",

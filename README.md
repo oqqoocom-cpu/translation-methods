@@ -1,6 +1,6 @@
 # 通用翻译方法与工具
 
-版本：0.3.0。仓库名称：`translation-methods`。许可证状态：暂未附开源许可证。
+版本：0.3.1。仓库名称：`translation-methods`。许可证：代码采用 MIT，文档、模板和虚构示例采用 CC BY 4.0，详见 [许可证说明](LICENSE.md)。
 
 本库整理可复用的翻译工作流、术语管理、质量控制、译审提示词、记录模板与检查工具，面向一般文档、技术资料、商务文本、文学与学术材料等翻译任务，不限于学术翻译。
 
@@ -47,4 +47,4 @@ python -B tools/sync_registry.py registry/public.registry.json --markdown genera
 
 目录只包含通用方法内容，可在本地初始化全新的独立 Git；不得导入任何私有项目的 Git 历史。暂存内容可用 `python -B tools/check_release.py --staged` 核验；该检查不审查完整提交历史，不能用于把旧私有仓库转为公开。
 
-首次远端发布流程见 [发布准备](PUBLICATION.md)。本库未完成许可证选择，也未声称已建成专家基准集、已实现原书全自动翻译或已优于某个翻译平台。详见 [许可证状态](LICENSE-STATUS.md) 与 [发布检查表](RELEASE-CHECKLIST.md)。
+首次远端发布流程见 [发布准备](PUBLICATION.md)。本库不声称已建成专家基准集、已实现原书全自动翻译或已优于某个翻译平台。详见 [许可证说明](LICENSE.md)、[许可证状态](LICENSE-STATUS.md) 与 [发布检查表](RELEASE-CHECKLIST.md)。
