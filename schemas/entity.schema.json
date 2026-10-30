@@ -8,7 +8,8 @@
     "source_label": {"$ref": "common.schema.json#/$defs/text"},
     "native_name": {"type": "string"},
     "official_name": {"$ref": "common.schema.json#/$defs/text"},
-    "candidate_zh": {"$ref": "common.schema.json#/$defs/text"},
+    "target_language": {"$ref": "common.schema.json#/$defs/text"},
+    "candidate_target": {"$ref": "common.schema.json#/$defs/text"},
     "scope": {"$ref": "common.schema.json#/$defs/scope"},
     "official_status": {"enum": ["not-checked", "disputed", "verified"]},
     "evidence": {"$ref": "common.schema.json#/$defs/evidence"},
@@ -33,6 +34,7 @@
     },
     "synthetic": {"type": "boolean"}
   },
+  "dependentRequired": {"candidate_target": ["target_language"]},
   "allOf": [{
     "if": {"properties": {"official_status": {"const": "verified"}}},
     "then": {"required": ["official_name", "evidence", "decision_id"]}

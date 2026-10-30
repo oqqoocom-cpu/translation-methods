@@ -1,144 +1,344 @@
 {
-  "project_id": "DEMO-NEW",
-  "phase": "intake",
-  "registry_version": "0.3.0-draft",
-  "registry_sha256": "a1fd3696e768c3f259ea410c12510b8df8ae53820bdb83a3939a68b860218d30",
+  "project_id": "DEMO-ORCHARD",
+  "phase": "delivery",
+  "process_tier": "standard",
+  "registry_version": "0.4.0",
+  "registry_sha256": "607c18ceea7662dae60acf07e7dfbdd2e8e19893b959d1212c44fc1fd1048895",
   "hash_algorithm": "canonical-json-v1",
+  "synthetic": true,
   "rules": [
     {
       "id": "GOV-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-101",
+          "kind": "synthetic",
+          "locator": "交付快照记录版本与哈希",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "GOV-002",
-      "applicability": "pending",
-      "acceptance": "pending"
-    },
-    {
-      "id": "GOV-003",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-102",
+          "kind": "synthetic",
+          "locator": "五节点快照",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "GOV-004",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-103",
+          "kind": "synthetic",
+          "locator": "冲突裁决DEC-DEMO-001",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "RIGHTS-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-104",
+          "kind": "synthetic",
+          "locator": "接收表",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "SOURCE-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-105",
+          "kind": "synthetic",
+          "locator": "源文件哈希与12单元映射",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "PILOT-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-106",
+          "kind": "synthetic",
+          "locator": "3条款试译放行",
+          "checked_at": "2026-10-11"
+        }
+      ]
+    },
+    {
+      "id": "STYLE-001",
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-107",
+          "kind": "synthetic",
+          "locator": "风格说明v1确认",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "CONTEXT-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-108",
+          "kind": "synthetic",
+          "locator": "任务规格与单元上下文",
+          "checked_at": "2026-10-11"
+        }
+      ]
+    },
+    {
+      "id": "SESSION-001",
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-109",
+          "kind": "synthetic",
+          "locator": "恢复清单与会话轮换",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "TRANS-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-110",
+          "kind": "synthetic",
+          "locator": "QA-DEMO-001忠实度检查",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "REVIEW-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-111",
+          "kind": "synthetic",
+          "locator": "新会话独立审校",
+          "checked_at": "2026-10-11"
+        }
+      ]
+    },
+    {
+      "id": "REVIEW-002",
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-112",
+          "kind": "synthetic",
+          "locator": "五层分轮记录",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "TERM-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-113",
+          "kind": "synthetic",
+          "locator": "TERM-DEMO-001锁定",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "TERM-002",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-114",
+          "kind": "synthetic",
+          "locator": "ENT-DEMO-001缩写碰撞测试",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "TERM-003",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-115",
+          "kind": "synthetic",
+          "locator": "ENT-DEMO-001双轨名称",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "MULTI-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-116",
+          "kind": "synthetic",
+          "locator": "源文扫描无非拉丁文字",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "MULTI-002",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "not-applicable",
+      "acceptance": "passed",
+      "reason": "源文全为英语电子文本，无非拉丁文字或抽取缺损片段。",
+      "decision_id": "DEC-DEMO-002",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-116",
+          "kind": "synthetic",
+          "locator": "源文扫描无非拉丁文字",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "MULTI-003",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "not-applicable",
+      "acceptance": "passed",
+      "reason": "源文全为英语，无非拉丁源语或平行文本。",
+      "decision_id": "DEC-DEMO-002",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-116",
+          "kind": "synthetic",
+          "locator": "源文扫描无非拉丁文字",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "QA-001",
-      "applicability": "pending",
-      "acceptance": "pending"
-    },
-    {
-      "id": "QA-002",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-117",
+          "kind": "synthetic",
+          "locator": "QA-DEMO-001受保护要素",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "QA-003",
-      "applicability": "pending",
-      "acceptance": "pending"
-    },
-    {
-      "id": "MODEL-001",
-      "applicability": "pending",
-      "acceptance": "pending"
-    },
-    {
-      "id": "BENCH-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "not-applicable",
+      "acceptance": "passed",
+      "reason": "源文不含表格。",
+      "decision_id": "DEC-DEMO-002",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-118",
+          "kind": "synthetic",
+          "locator": "源文结构扫描无表格",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "BENCH-002",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "not-applicable",
+      "acceptance": "passed",
+      "reason": "项目不作质量或优劣结论。",
+      "decision_id": "DEC-DEMO-002",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-119",
+          "kind": "synthetic",
+          "locator": "交付说明不含质量或优劣结论",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "PRIV-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-120",
+          "kind": "synthetic",
+          "locator": "外部服务授权",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
-      "id": "RESEARCH-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "id": "FILES-001",
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-121",
+          "kind": "synthetic",
+          "locator": "目录约定与阶段盘点",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
-      "id": "PROD-001",
-      "applicability": "pending",
-      "acceptance": "pending"
-    },
-    {
-      "id": "PROD-002",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "id": "COST-001",
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-122",
+          "kind": "synthetic",
+          "locator": "分阶段工时费用",
+          "checked_at": "2026-10-11"
+        }
+      ]
     },
     {
       "id": "ERROR-001",
-      "applicability": "pending",
-      "acceptance": "pending"
+      "applicability": "applicable",
+      "acceptance": "passed",
+      "evidence": [
+        {
+          "evidence_id": "EVID-DEMO-123",
+          "kind": "synthetic",
+          "locator": "ISS-DEMO-001根因与REG-DEMO-001",
+          "checked_at": "2026-10-11"
+        }
+      ]
     }
   ]
 }

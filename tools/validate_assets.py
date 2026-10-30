@@ -11,6 +11,8 @@ from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_CHECKS = {"STRUCTURE", "PROTECTED", "HIGH-RISK", "TERMS", "FIDELITY", "LAYOUT"}
+TIERS = ("light", "standard", "full")
+
 
 def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     value = {}
@@ -84,6 +86,17 @@ def validate(kind: str, value: dict[str, Any]) -> None:
             raise ValueError("Passed report is missing a required check family")
 
 
+def rules_for_tier(registry: dict[str, Any], tier: str) -> list[str]:
+    """Return active rule IDs for a process tier; tiers are cumulative."""
+    if tier not in TIERS:
+        raise ValueError("Unknown process tier")
+    limit = TIERS.index(tier)
+    return [
+        rule["id"] for rule in registry["requirements"]
+        if rule["status"] == "active" and TIERS.index(rule["tier"]) <= limit
+    ]
+
+
 def validate_application(value: dict[str, Any], registry: dict[str, Any]) -> None:
     import hashlib
     validate("application", value)
@@ -93,8 +106,8 @@ def validate_application(value: dict[str, Any], registry: dict[str, Any]) -> Non
         raise ValueError("Application registry hash mismatch")
     if value["registry_version"] != registry["registry_version"]:
         raise ValueError("Application registry version mismatch")
-    if {item["id"] for item in value["rules"]} != {item["id"] for item in registry["requirements"]}:
-        raise ValueError("Application must explicitly retain every registry rule")
+    if {item["id"] for item in value["rules"]} != set(rules_for_tier(registry, value["process_tier"])):
+        raise ValueError("Application must retain exactly the rules of its process tier")
 
 
 def main() -> int:
@@ -123,11 +136,11 @@ def main() -> int:
             for path in sorted((ROOT / "examples").glob("*.synthetic.json")):
                 kind = path.name.removesuffix(".synthetic.json")
                 value = load_json(path)
+                if value.get("synthetic") is not True:
+                    raise ValueError("Examples must be marked synthetic")
                 if kind == "application":
                     validate_application(value, registry)
                 else:
-                    if value.get("synthetic") is not True:
-                        raise ValueError("Examples must be marked synthetic")
                     validate(kind, value)
                 count += 1
             print(f"records={count} valid")

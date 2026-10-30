@@ -10,13 +10,15 @@ import subprocess
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
 
-MANIFEST = "release_manifest_v0.3.json"
+MANIFEST = "release_manifest.json"
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_TYPES = {".py", ".json", ".md", ".txt"}
 SPECIAL = {".gitignore", ".gitattributes"}
 RISK_PATTERNS = {
-    "local-path": re.compile(r"\b[A-Za-z]:[\\/]|/(?:Users|home)/|\\\\[A-Za-z0-9_-]+\\"),
-    "private-unit-id": re.compile(r"\b(?:BOOK-\d{4}|PDF\d{3}-S\d{3})\b", re.I),
+    # ASCII lookarounds, not \b: in Python, CJK characters count as word characters,
+    # so \b would miss a token written directly after Chinese text.
+    "local-path": re.compile(r"(?<![A-Za-z0-9])[A-Za-z]:[\\/]|/(?:Users|home)/|\\\\[A-Za-z0-9_-]+\\"),
+    "private-unit-id": re.compile(r"(?<![A-Za-z0-9])(?:BOOK-\d{4}|PDF\d{3}-S\d{3})(?![A-Za-z0-9])", re.I),
     "secret-pattern": re.compile(r"(?:sk-[A-Za-z0-9_-]{16,}|gh[pousr]_[A-Za-z0-9_]{20,}|github_pat_[A-Za-z0-9_]{20,}|Bearer\s+[A-Za-z0-9._-]{16,})"),
 }
 

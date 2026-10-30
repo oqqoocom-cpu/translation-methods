@@ -1,16 +1,18 @@
 # 通用翻译方法与工具
 
-版本：0.3.1。仓库名称：`translation-methods`。许可证：代码采用 MIT，文档、模板和虚构示例采用 CC BY 4.0，详见 [许可证说明](LICENSE.md)。
+版本：0.4.0。仓库名称：`translation-methods`。许可证：代码采用 MIT，文档、模板和虚构示例采用 CC BY 4.0，详见 [许可证说明](LICENSE.md)。
 
 本库整理可复用的翻译工作流、术语管理、质量控制、译审提示词、记录模板与检查工具，面向一般文档、技术资料、商务文本、文学与学术材料等翻译任务，不限于学术翻译。
 
 短文本、批量文档和长篇书籍按体量、风险与用途选择流程；书籍研究辅助层和印刷交付是特定场景，不是所有项目的必选项。提示词可填写源语与目标语，部分文档以中文译入和书籍处理为例。这些适用场景不代表本库已经对所有语种、文体或文件格式完成效果验证。
 
+规则分轻量、标准、完整三级，逐级累加，分别包含 10、25 和 32 条。流程等级在接收时按用途、体量和风险选定并记录理由；条件规则不适用时标为不适用，并写明理由和裁决，不从快照中删除。
+
 它不是自动翻译产品，不含任何实际项目的原文、译文、页图、翻译记忆、专家意见或模型调用日志。示例全部为人为编写的虚构记录，不用于证明翻译质量。
 
 ## 方法入口
 
-首次阅读从 [快速上手](QUICKSTART.md) 开始，再按当前阶段查阅下列文档。
+首次阅读从 [快速上手](QUICKSTART.md) 开始，再看 [虚构项目演练](examples/walkthrough.md) 中的完整小例，然后按当前阶段查阅下列文档。
 
 - [定位与边界](docs/01_项目定位与边界.md)
 - [生命周期与阶段放行](docs/02_项目生命周期.md)
@@ -36,10 +38,10 @@ python -m pip install -r requirements.txt
 python -B -m unittest discover -s tests -v
 python -B tools/validate_assets.py
 python -B tools/check_release.py
-python -B tools/sync_registry.py registry/public.registry.json --markdown generated/registry.md --snapshot generated/application.json --project-id DEMO-NEW --phase intake
+python -B tools/sync_registry.py registry/public.registry.json --markdown generated/registry.md --snapshot generated/application.json --project-id DEMO-NEW --phase intake --tier standard
 ```
 
-输出必须是尚不存在的新文件。规则同步快照中的 `pending` 是“待验收”，不是已通过。工具不会调用云端翻译服务，也不提供 API 密钥配置。
+输出必须是尚不存在的新文件。快照只包含所选流程等级的规则，其中的 `pending` 是“待验收”，不是已通过。工具不会调用云端翻译服务，也不提供 API 密钥配置。
 
 ## 发布边界
 

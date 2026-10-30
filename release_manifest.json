@@ -1,5 +1,5 @@
 {
-  "version": "0.3.1",
+  "version": "0.4.0",
   "scope": "generic-methods-only",
   "self_excluded": true,
   "files": [
@@ -35,18 +35,18 @@
     },
     {
       "path": "PUBLICATION.md",
-      "sha256": "73c6abf9e455cd8222b03ee07439864048381647aec1099b758170f2a4659827",
-      "size_bytes": 1880
+      "sha256": "7132f67702f6bee3cf198a206c9494a50da635c20052b879afe1b3b473f6fbe5",
+      "size_bytes": 1875
     },
     {
       "path": "QUICKSTART.md",
-      "sha256": "efd078e2e872f8fef97bb8a437a37b88a543b46da2c893ad256a4ba485d448c2",
-      "size_bytes": 3118
+      "sha256": "f210ba2b86ede3d7b433ccc079827a1c0b2692ac47e9eab9da305e287ff5b858",
+      "size_bytes": 3675
     },
     {
       "path": "README.md",
-      "sha256": "62d5a49dc691dfc0b77c1bf8afc3650c20af585a72a65e1876cb7ef52ac94b68",
-      "size_bytes": 3539
+      "sha256": "dc952ff997c23f2668d80e0a7e17f14099c19e9eeead6b7fa0e884c2c6265df2",
+      "size_bytes": 3923
     },
     {
       "path": "REFERENCES.md",
@@ -60,43 +60,43 @@
     },
     {
       "path": "docs/01_项目定位与边界.md",
-      "sha256": "b142d1d590ec60c314f0b1351ce50c31cfed1509343b49c7462209c8bbe91298",
-      "size_bytes": 1764
+      "sha256": "4aff8f1a77d199084dd993b5e0108602da9b837ef49e463eaf5ce61c6a86a622",
+      "size_bytes": 2442
     },
     {
       "path": "docs/02_项目生命周期.md",
-      "sha256": "5304af342ee59dc452f82589ddb1ea6d5944b4105cd25a47d699bc6489e4c2e4",
-      "size_bytes": 2454
+      "sha256": "1234afcfb1f2d7e5029cf3678e53bc89195438e2314ee0c17c1b51eb10b317b8",
+      "size_bytes": 3040
     },
     {
       "path": "docs/03_术语与实体治理.md",
-      "sha256": "bfc1423204520859acfc34c18eaf32e6e202c8728c29629ecd27afc052ea6fd5",
-      "size_bytes": 2068
+      "sha256": "e9ffc91302a812547f688db770ecd6613caa717a3633af89eedc82286e312c12",
+      "size_bytes": 2196
     },
     {
       "path": "docs/04_质量控制与回归.md",
-      "sha256": "dc7bb50fd2551c493b59feb743717c0130f0e86714aafa54c06b8f6170c5f300",
-      "size_bytes": 2923
+      "sha256": "a99ef530e75035c7022d18673b0276ba0a94b0b20321409c9e958c5698461775",
+      "size_bytes": 3502
     },
     {
       "path": "docs/05_多模型协作.md",
-      "sha256": "e73b90f35894cb33610b50292c3ea8475bc32daecc765aad46a09c63b3a121e3",
-      "size_bytes": 2223
+      "sha256": "df93c4e690f32bc039fb072e2dfa5f1cc9eece0fd3e288a0cc63b1fa0c2a9a0c",
+      "size_bytes": 2607
     },
     {
       "path": "docs/06_数据模型与目录.md",
-      "sha256": "bd66357164d75b00a9a21103d47ff149f665bc16d3fffe5678ecf0fdef1ccb57",
-      "size_bytes": 1752
+      "sha256": "4a07baa5b4093f0be3894ab0565be4a003e1160d3bdd105c6e13cfe1a53749cf",
+      "size_bytes": 2117
     },
     {
       "path": "docs/07_排版与交付.md",
-      "sha256": "026693b000c9f55222934184ce7b2e29bf2abd75c593a4e687632523ce20ba3c",
-      "size_bytes": 2045
+      "sha256": "0e5e36f2ea2c260037d7b9046a349c38886d4303f78e0220e4aeaab94cf81957",
+      "size_bytes": 2048
     },
     {
       "path": "docs/08_受控修改与续接.md",
-      "sha256": "0e3cec803a91c27c478544a475eedcbf56f52044550ff4459bbdfd1660a8e14f",
-      "size_bytes": 1579
+      "sha256": "5561ec43027e45430859f2f9eff86b1ac0178d3b49b0db0036bb5c222acaadc5",
+      "size_bytes": 1803
     },
     {
       "path": "docs/09_权利隐私与发布.md",
@@ -105,18 +105,18 @@
     },
     {
       "path": "docs/10_技术复盘与失败模式.md",
-      "sha256": "28599b5c318a63a4b35082ea56cf045c01f5b1f1788e5c93c14bed0b78ebfb06",
-      "size_bytes": 2897
+      "sha256": "3010102eb762f4682c4ef4033350e06713b9d826f8eda4223ff59759e2a3c8db",
+      "size_bytes": 3598
     },
     {
       "path": "docs/11_项目目录整理.md",
-      "sha256": "1364e3d52e55eafda920fe85850ea9d977ed28a730e1d40683777511702b0d8e",
-      "size_bytes": 2126
+      "sha256": "4aeac51ecf7ea84c270347526f09dc37a817761273b5499d666f564c8cdc28bc",
+      "size_bytes": 2523
     },
     {
       "path": "examples/application.synthetic.json",
-      "sha256": "5552550a37d2bb5d1d14811dee5be551eb9c8349e037c980cdfdb12ea6922974",
-      "size_bytes": 2975
+      "sha256": "fd2d71581803efe2c68befcfff2f054a7864e3883e1733b3aa791613d4e1fc19",
+      "size_bytes": 8539
     },
     {
       "path": "examples/decision.synthetic.json",
@@ -125,8 +125,8 @@
     },
     {
       "path": "examples/entity.synthetic.json",
-      "sha256": "247cac105a91cec67293faaf41d20527292f3a06d2ea8d668e9f9073c56c719e",
-      "size_bytes": 660
+      "sha256": "1e28ca7764ac8e0392267fd80de3bf412efc0340aa13c23b1269cf25465d11b0",
+      "size_bytes": 691
     },
     {
       "path": "examples/issue.synthetic.json",
@@ -140,18 +140,23 @@
     },
     {
       "path": "examples/term.synthetic.json",
-      "sha256": "e05ac10ffb59805ac995dc4f280164c9978f3fabbf1ecc01b0e23b5fd88703b2",
-      "size_bytes": 773
+      "sha256": "93781e036e10846d048ac9df901a14de1c99161c8d20177b338ef294c521da28",
+      "size_bytes": 804
+    },
+    {
+      "path": "examples/walkthrough.md",
+      "sha256": "4bab3413988b1d343e968354fdd738ec99e2292cef9f337bfd485b3f94ddc310",
+      "size_bytes": 7952
     },
     {
       "path": "registry/public.registry.json",
-      "sha256": "a397eb07f244f8465efc70ac8155f719a83f0182ad1e6b508821dd6e9c2c6199",
-      "size_bytes": 16834
+      "sha256": "edff1cc4e9e29313f775e50c0e3fdeb144b0e03ffcaee6bc4cd4dc1413f6eb08",
+      "size_bytes": 20913
     },
     {
       "path": "registry/public.registry.md",
-      "sha256": "e09af4f02c597543cd5d9a9b73066cc0958206760c5d0178e3ae6ef5ef94c493",
-      "size_bytes": 12362
+      "sha256": "cde77abf056f27f96df9f82036aa4382783a8feb969f8a930071f51d336b8d02",
+      "size_bytes": 15069
     },
     {
       "path": "requirements.txt",
@@ -160,8 +165,8 @@
     },
     {
       "path": "schemas/application.schema.json",
-      "sha256": "3e68c7ffcda930b574518464b7e2c34919d4d7f83c4b0dd7ae46b5f4d483e9bb",
-      "size_bytes": 1730
+      "sha256": "8a9734c26770c574c69ad65f2ddd1b08bfad8a3211dd2838fcf358cbc3f529b5",
+      "size_bytes": 1845
     },
     {
       "path": "schemas/common.schema.json",
@@ -175,8 +180,8 @@
     },
     {
       "path": "schemas/entity.schema.json",
-      "sha256": "535f98e75549c385cda30cac46ca2811202395a5add85291d55b7b71f0d5d41d",
-      "size_bytes": 1825
+      "sha256": "adf9fb5b386555c9b7dd34858b36a131efc5da17c1f1adc6ee833dcabd2aae88",
+      "size_bytes": 1962
     },
     {
       "path": "schemas/issue.schema.json",
@@ -190,18 +195,18 @@
     },
     {
       "path": "schemas/registry.schema.json",
-      "sha256": "31e5d71ed0cd00eb302b4c38e42322d08b955dc3f20bf73fcf71dcfc669aab79",
-      "size_bytes": 1543
+      "sha256": "0bfae944eecbc2c6ffad949f2177b2085ce47c2bc646028b1a2003b92ce4d0b6",
+      "size_bytes": 1553
     },
     {
       "path": "schemas/term.schema.json",
-      "sha256": "4e8f79459444cdce05e758e405313e56d1154d1b683e73aceba4b2ceede2c0c1",
-      "size_bytes": 1708
+      "sha256": "aecc2cb7cdee960ff4d55452cd11c1484311b5662a73403fddb673dad14f8b16",
+      "size_bytes": 1868
     },
     {
       "path": "templates/project-intake.blank.json",
-      "sha256": "4e34dd657f5ef88a29b84faab3747c6ad92db4a40987d96e338064755d453e2c",
-      "size_bytes": 341
+      "sha256": "c204c45aae047fc6614342aacfd773221c5d79bfb98025c050d39cfe9960b248",
+      "size_bytes": 443
     },
     {
       "path": "templates/recovery.blank.json",
@@ -210,18 +215,18 @@
     },
     {
       "path": "templates/term.blank.json",
-      "sha256": "551bc34efdcaddea559e8df72e9d30ffbd785964caddcc6727f61850ac0d1f0d",
-      "size_bytes": 420
+      "sha256": "3d9030868f9535e20b29e4da425038b63fce0f472e03ce153db5b190f6651bf9",
+      "size_bytes": 451
     },
     {
       "path": "templates/translation-prompts.md",
-      "sha256": "0526c22971c384407ab7c8db77e678425765f2e69b41c546763d4ce36a533de9",
-      "size_bytes": 2956
+      "sha256": "b9d5e28ca1cdb49354c9419b0e5e5611546833eb24644cb9293923a20a33e771",
+      "size_bytes": 3285
     },
     {
       "path": "tests/test_public_assets.py",
-      "sha256": "954864c9c41998706bddecbe0f0b18d3abdef50ac33123ba793903b5b872b0f4",
-      "size_bytes": 14244
+      "sha256": "8de1824ea55efd49dd324b58968822489c96668d1fb20b3e6e84d8a6bd949570",
+      "size_bytes": 23106
     },
     {
       "path": "tests/test_release.py",
@@ -230,18 +235,18 @@
     },
     {
       "path": "tools/check_release.py",
-      "sha256": "b7d6e18cfafa053a38ca5181f1298576617f16564a45baaee53713e1dfd799cd",
-      "size_bytes": 6205
+      "sha256": "afd05ece66accad552524ad10be14fcfed2ac36f597ec69d64bbfade8f8bda0a",
+      "size_bytes": 6394
     },
     {
       "path": "tools/sync_registry.py",
-      "sha256": "96d0435b9fd3048c9f27aeb21a7d9a8354fda5ae2965674ccabcd031395f2eca",
-      "size_bytes": 4417
+      "sha256": "ee3343fa5c1d6d9ea956410199f895a8f75914cef568d5ad8ee3565d805c999e",
+      "size_bytes": 4820
     },
     {
       "path": "tools/validate_assets.py",
-      "sha256": "886959d0d4f996167d97831899a11c4fa71f70a148db66c9b2a789063b6135a7",
-      "size_bytes": 5829
+      "sha256": "9a3a64b2e0967bad5104c948b90b47a5f51dc09ed0bea5c053de4c8272e8666e",
+      "size_bytes": 6274
     }
   ]
 }

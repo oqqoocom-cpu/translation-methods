@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -14,8 +15,8 @@ from jsonschema import ValidationError
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.sync_registry import make_snapshot, registry_hash, render_markdown, write_new_outputs
-from tools.validate_assets import load_json, validate, validate_application, validator
-from tools.check_release import check_release
+from tools.validate_assets import TIERS, load_json, rules_for_tier, validate, validate_application, validator
+from tools.check_release import RISK_PATTERNS, check_release
 
 
 def fixture(kind: str) -> dict:
@@ -24,6 +25,12 @@ def fixture(kind: str) -> dict:
 
 def registry() -> dict:
     return json.loads((ROOT / "registry/public.registry.json").read_text(encoding="utf-8"))
+
+
+def rule_id_pattern(ids) -> re.Pattern:
+    # Match whole rule IDs only, so QA-DEMO-001 or ERROR-001 never yield a shorter false ID.
+    prefixes = "|".join(map(re.escape, sorted({rule_id.rsplit("-", 1)[0] for rule_id in ids})))
+    return re.compile(rf"(?<![A-Za-z0-9-])(?:{prefixes})-\d{{3}}(?![A-Za-z0-9-])")
 
 
 class SchemaTests(unittest.TestCase):
@@ -44,7 +51,7 @@ class SchemaTests(unittest.TestCase):
 
     def test_registry_valid(self):
         validate("registry", registry())
-        self.assertEqual(len(registry()["requirements"]), 27)
+        self.assertEqual(len(registry()["requirements"]), 32)
 
     def test_general_scope_and_conditional_research_layer(self):
         value = registry()
@@ -57,11 +64,41 @@ class SchemaTests(unittest.TestCase):
         self.assertEqual(rules["REVIEW-001"]["strength"], "mandatory")
         self.assertEqual(rules["PRIV-001"]["strength"], "mandatory")
 
+    def test_tiers_are_cumulative(self):
+        value = registry()
+        sets = [set(rules_for_tier(value, tier)) for tier in TIERS]
+        self.assertEqual([len(item) for item in sets], [10, 25, 32])
+        self.assertTrue(sets[0] < sets[1] < sets[2])
+        strengths = [rule["strength"] for rule in value["requirements"]]
+        self.assertEqual(strengths.count("mandatory"), 22)
+        self.assertEqual(strengths.count("mandatory-when-applicable"), 10)
+
+    def test_core_and_benchmark_rule_tiers(self):
+        rules = {rule["id"]: rule for rule in registry()["requirements"]}
+        for rule_id in ["TRANS-001", "REVIEW-001", "QA-001", "PRIV-001", "SOURCE-001", "RIGHTS-001"]:
+            with self.subTest(rule=rule_id):
+                self.assertEqual((rules[rule_id]["tier"], rules[rule_id]["strength"]), ("light", "mandatory"))
+        for rule_id in ["QA-002", "BENCH-001", "MODEL-001"]:
+            with self.subTest(rule=rule_id):
+                self.assertEqual(
+                    (rules[rule_id]["tier"], rules[rule_id]["strength"]), ("full", "mandatory-when-applicable"),
+                )
+
+    def test_rule_tier_required_and_known(self):
+        value = registry()
+        del value["requirements"][0]["tier"]
+        self.reject("registry", value)
+        value = registry()
+        value["requirements"][0]["tier"] = "medium"
+        self.reject("registry", value)
+
     def test_application_valid(self):
         validate_application(fixture("application"), registry())
 
     def test_locked_term_requires_evidence_and_decision(self):
-        for field in ["evidence", "scope", "decision_reason", "decision_id", "verified_at"]:
+        for field in [
+            "evidence", "scope", "decision_reason", "decision_id", "verified_at", "target_language", "candidate_target",
+        ]:
             with self.subTest(field=field):
                 value = fixture("term")
                 del value[field]
@@ -178,7 +215,7 @@ class SchemaTests(unittest.TestCase):
         self.reject("quality-report", value)
 
     def test_synthetic_cannot_verify_real_record(self):
-        for kind in ["term", "entity", "decision", "quality-report"]:
+        for kind in ["term", "entity", "decision", "quality-report", "application"]:
             with self.subTest(kind=kind):
                 value = fixture(kind)
                 value["synthetic"] = False
@@ -201,14 +238,21 @@ class SchemaTests(unittest.TestCase):
         self.reject("registry", value)
 
     def test_application_exception_needs_reason(self):
-        value = fixture("application")
+        value = make_snapshot(registry(), "DEMO-NEW", "intake", "standard")
         value["rules"][0]["applicability"] = "exception"
         self.reject("application", value)
+        value["rules"][0].update(reason="Synthetic exception reason", decision_id="DEC-DEMO-NEW")
+        validate_application(value, registry())
 
     def test_application_pending_cannot_pass(self):
-        value = fixture("application")
-        value["rules"][0]["acceptance"] = "passed"
+        value = make_snapshot(registry(), "DEMO-NEW", "intake", "standard")
+        value["synthetic"] = True
+        value["rules"][0].update(acceptance="passed", evidence=[{
+            "evidence_id": "EVID-DEMO-NEW", "kind": "synthetic", "locator": "Synthetic check", "checked_at": "2026-10-11",
+        }])
         self.reject("application", value)
+        value["rules"][0]["applicability"] = "applicable"
+        validate_application(value, registry())
 
     def test_application_missing_rule_rejected(self):
         value = fixture("application")
@@ -222,6 +266,69 @@ class SchemaTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_application(value, registry())
 
+    def test_application_needs_process_tier(self):
+        value = fixture("application")
+        del value["process_tier"]
+        self.reject("application", value)
+
+    def test_application_tier_must_match_rules(self):
+        for tier in ["light", "full"]:
+            with self.subTest(tier=tier):
+                value = fixture("application")
+                value["process_tier"] = tier
+                with self.assertRaises(ValueError):
+                    validate_application(value, registry())
+
+    def test_application_extra_rule_rejected(self):
+        value = fixture("application")
+        value["rules"].append({"id": "GOV-003", "applicability": "pending", "acceptance": "pending"})
+        with self.assertRaises(ValueError):
+            validate_application(value, registry())
+
+    def test_candidate_target_needs_target_language(self):
+        value = fixture("term")
+        value["status"] = "candidate"
+        validate("term", value)
+        del value["target_language"]
+        self.reject("term", value)
+        value = fixture("entity")
+        del value["target_language"]
+        self.reject("entity", value)
+        del value["candidate_target"]
+        validate("entity", value)
+
+    def test_no_language_specific_field_names(self):
+        pattern = re.compile(r'"[a-z_]*_zh"')
+        paths = [
+            *(ROOT / "schemas").glob("*.json"), *(ROOT / "templates").glob("*.json"),
+            *(ROOT / "examples").glob("*.json"), *(ROOT / "registry").glob("*.json"),
+        ]
+        self.assertTrue(paths)
+        for path in paths:
+            with self.subTest(path=path.name):
+                self.assertIsNone(pattern.search(path.read_text(encoding="utf-8")))
+
+    def test_examples_cross_reference(self):
+        term, entity, decision = fixture("term"), fixture("entity"), fixture("decision")
+        issue, report = fixture("issue"), fixture("quality-report")
+        self.assertEqual({term["decision_id"], entity["decision_id"]}, {decision["decision_id"]})
+        self.assertEqual(issue["fix_version"], report["target_version"])
+        self.assertEqual(issue["regression_refs"], decision["regression_refs"])
+        self.assertLessEqual(set(issue["affected_units"]), set(decision["affected_units"]))
+
+    def test_delivery_snapshot_records_not_applicable_rules(self):
+        value = fixture("application")
+        self.assertEqual((value["process_tier"], value["phase"]), ("standard", "delivery"))
+        excluded = {rule["id"] for rule in value["rules"] if rule["applicability"] == "not-applicable"}
+        self.assertEqual(excluded, {"MULTI-002", "MULTI-003", "QA-003", "BENCH-002"})
+        conditional = {
+            rule["id"] for rule in registry()["requirements"] if rule["strength"] == "mandatory-when-applicable"
+        }
+        self.assertLessEqual(excluded, conditional)
+        self.assertTrue(all(rule["decision_id"] == "DEC-DEMO-002" for rule in value["rules"] if rule["id"] in excluded))
+        self.assertTrue(all(rule["acceptance"] == "passed" for rule in value["rules"]))
+        self.assertEqual(sum(rule["applicability"] == "applicable" for rule in value["rules"]), 21)
+
 
 class ToolTests(unittest.TestCase):
     def test_public_registry_markdown_is_current(self):
@@ -231,8 +338,18 @@ class ToolTests(unittest.TestCase):
         )
 
     def test_snapshot_is_pending(self):
-        value = make_snapshot(registry(), "DEMO-NEW", "intake")
+        value = make_snapshot(registry(), "DEMO-NEW", "intake", "standard")
         self.assertTrue(all(r["acceptance"] == r["applicability"] == "pending" for r in value["rules"]))
+
+    def test_snapshot_size_follows_tier(self):
+        for tier, size in zip(TIERS, [10, 25, 32]):
+            with self.subTest(tier=tier):
+                value = make_snapshot(registry(), "DEMO-NEW", "intake", tier)
+                self.assertEqual((value["process_tier"], len(value["rules"])), (tier, size))
+
+    def test_unknown_tier_rejected(self):
+        with self.assertRaises(ValueError):
+            make_snapshot(registry(), "DEMO-NEW", "intake", "medium")
 
     def test_hash_ignores_key_order(self):
         value = registry()
@@ -286,6 +403,7 @@ class ToolTests(unittest.TestCase):
                 sys.executable, "-B", str(ROOT / "tools/sync_registry.py"),
                 str(ROOT / "registry/public.registry.json"), "--markdown", str(output),
                 "--snapshot", str(snapshot), "--project-id", "DEMO-NEW", "--phase", "intake",
+                "--tier", "standard",
             ]
             result = subprocess.run(command, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout)
@@ -323,6 +441,19 @@ class ToolTests(unittest.TestCase):
             ], capture_output=True, text=True)
             self.assertNotEqual(result.returncode, 0)
 
+    def test_cli_snapshot_requires_tier(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output, snapshot = root / "rules.md", root / "application.json"
+            result = subprocess.run([
+                sys.executable, "-B", str(ROOT / "tools/sync_registry.py"),
+                str(ROOT / "registry/public.registry.json"), "--markdown", str(output),
+                "--snapshot", str(snapshot), "--project-id", "DEMO-NEW", "--phase", "intake",
+            ], capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(output.exists())
+            self.assertFalse(snapshot.exists())
+
 
 class PackagingTests(unittest.TestCase):
     def test_license_map_declares_dual_scope(self):
@@ -344,10 +475,54 @@ class PackagingTests(unittest.TestCase):
                 self.assertFalse(raw.startswith(b"\xef\xbb\xbf"), path.name)
                 raw.decode("utf-8")
 
+    def test_risk_patterns_catch_tokens_next_to_cjk(self):
+        cjk = chr(0x89C1)
+        unit = "BOOK" + "-" + "1234"
+        for kind, value in [
+            ("local-path", cjk + chr(68) + ":" + chr(92) + "private"), ("local-path", cjk + chr(67) + ":/x"),
+            ("private-unit-id", cjk + unit), ("private-unit-id", unit + cjk),
+        ]:
+            with self.subTest(kind=kind, value=ascii(value)):
+                self.assertIsNotNone(RISK_PATTERNS[kind].search(value))
+        for value in ["https://example.org", "mailto:a@b.c", "abc:/x"]:
+            with self.subTest(value=value):
+                self.assertIsNone(RISK_PATTERNS["local-path"].search(value))
+
     def test_templates_are_deliberately_incomplete(self):
         for path in (ROOT / "templates").glob("*.blank.json"):
             value = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(value.get("template_status", value.get("status")), "draft-template")
+
+    def test_markdown_rule_ids_exist(self):
+        ids = {rule["id"] for rule in registry()["requirements"]}
+        pattern = rule_id_pattern(ids)
+        found = set()
+        for path in ROOT.rglob("*.md"):
+            if path.relative_to(ROOT).parts[0] == ".git":
+                continue
+            with self.subTest(path=path.name):
+                names = set(pattern.findall(path.read_text(encoding="utf-8")))
+                self.assertLessEqual(names, ids)
+                found |= names
+        self.assertTrue(found)
+
+    def test_walkthrough_ids_match_examples(self):
+        text = (ROOT / "examples/walkthrough.md").read_text(encoding="utf-8")
+        examples = "".join(path.read_text(encoding="utf-8") for path in sorted((ROOT / "examples").glob("*.json")))
+        ids = {
+            item for item in re.findall(r"(?<![A-Za-z0-9-])[A-Z]+-DEMO-\d{3}(?![A-Za-z0-9-])", text)
+            if not item.startswith("UNIT-")
+        }
+        self.assertTrue(ids)
+        for item in sorted(ids):
+            with self.subTest(id=item):
+                self.assertIn(item, examples)
+
+    def test_walkthrough_light_tier_list_matches_registry(self):
+        value = registry()
+        section = (ROOT / "examples/walkthrough.md").read_text(encoding="utf-8").rsplit("\n## ", 1)[1]
+        listed = set(rule_id_pattern({rule["id"] for rule in value["requirements"]}).findall(section))
+        self.assertEqual(listed, set(rules_for_tier(value, "light")))
 
 
 if __name__ == "__main__":

@@ -9,7 +9,8 @@
     "source_language": {"$ref": "common.schema.json#/$defs/text"},
     "native_script": {"type": "string"},
     "transliteration": {"type": "string"},
-    "candidate_zh": {"$ref": "common.schema.json#/$defs/text"},
+    "target_language": {"$ref": "common.schema.json#/$defs/text"},
+    "candidate_target": {"$ref": "common.schema.json#/$defs/text"},
     "evidence": {"$ref": "common.schema.json#/$defs/evidence"},
     "scope": {"$ref": "common.schema.json#/$defs/scope"},
     "author_specific_usage": {"type": "boolean"},
@@ -21,10 +22,11 @@
     "rejection_reason": {"$ref": "common.schema.json#/$defs/text"},
     "synthetic": {"type": "boolean"}
   },
+  "dependentRequired": {"candidate_target": ["target_language"]},
   "allOf": [
     {
       "if": {"properties": {"status": {"enum": ["verified", "locked"]}}},
-      "then": {"required": ["candidate_zh", "evidence", "decision_reason", "decision_id", "verified_at"]}
+      "then": {"required": ["target_language", "candidate_target", "evidence", "decision_reason", "decision_id", "verified_at"]}
     },
     {
       "if": {"properties": {"status": {"const": "rejected"}}},

@@ -2,6 +2,8 @@
   "status": "draft-template",
   "project_id": null,
   "target_level": null,
+  "process_tier": null,
+  "tier_reason": null,
   "source_provenance": null,
   "source_file_hashes": [],
   "usage_boundary": null,
@@ -9,6 +11,8 @@
   "external_service_permissions": [],
   "task_specification": null,
   "pilot_risk_coverage": [],
+  "directory_convention": null,
+  "cost_record": null,
   "registry_application": null,
   "approved_by": null
 }
