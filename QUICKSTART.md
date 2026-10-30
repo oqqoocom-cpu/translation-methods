@@ -6,12 +6,12 @@
 
 | 顺序 | 需要确定的事 | 使用入口 |
 |---|---|---|
-| 1 | 来源、用途、读者、源语与目标语、外发许可、目标质量与流程等级 | [项目定位](docs/01_项目定位与边界.md)、[接收表](templates/project-intake.blank.json) |
+| 1 | 来源、用途、读者、源语与目标语、外发许可、目标质量与流程等级 | [项目定位](docs/01_项目定位与边界.md)、[接收表](templates/project-intake.blank.json)、[成本表](templates/cost-sheet.blank.json) |
 | 2 | 源文件哈希、结构与原文定位、稳定单元编号 | [生命周期](docs/02_项目生命周期.md)、[数据结构](docs/06_数据模型与目录.md) |
-| 3 | 代表性试译、专名风险及独立译审角色 | [译审协作](docs/05_多模型协作.md)、[提示词](templates/translation-prompts.md) |
+| 3 | 代表性试译、专名风险及独立译审角色 | [译审协作](docs/05_多模型协作.md)、[提示词](templates/translation-prompts.md)、[风格说明](templates/style-guide.blank.json) |
 | 4 | 术语、实体、疑难及裁决的作用域 | [术语治理](docs/03_术语与实体治理.md)、[术语模板](templates/term.blank.json) |
-| 5 | 按单元或批次生成忠实底稿、独立审校、裁决与目标语编辑 | [质量回归](docs/04_质量控制与回归.md) |
-| 6 | 全项目检查、适用的格式验收、交付及未决问题 | [排版交付](docs/07_排版与交付.md)、[续接模板](templates/recovery.blank.json) |
+| 5 | 按单元或批次生成忠实底稿、独立审校、裁决与目标语编辑 | [质量回归](docs/04_质量控制与回归.md)、[批次清单](templates/batch-list.blank.json) |
+| 6 | 全项目检查、适用的格式验收、交付及未决问题 | [排版交付](docs/07_排版与交付.md)、[交付清单](templates/delivery-list.blank.json)、[续接模板](templates/recovery.blank.json) |
 
 空白模板是待填写的记录，不是可通过验收的成品。放行条件逐项核实，不把“运行工具成功”当作“译文已正确”。
 
@@ -51,6 +51,8 @@ python -B tools/check_translation.py --source examples/units/source.json --targe
 ```
 
 屏幕只显示检查项、计数、单元编号、问题代码和相关编号，不回显原文或译文；完整结果写入报告文件，报告与快照一样留在忽略目录。退出码 0 表示已运行的检查未发现问题，1 表示有候选问题，2 表示输入无效、报告文件已存在或没有任何检查得以运行。不加 `--glossary` 时跳过术语检查，屏幕显示 `skipped=terms:no-glossary`。
+
+示例中 `draft-1` 的退出码为 1，报出 2 条术语发现，都在 `UNIT-DEMO-001`；换成 `draft-2` 时退出码为 0。原命令再次运行会因报告已存在返回 2，须换一个新文件名。运行发布检查前，先把 `generated/` 移出仓库或删除。
 
 检查只作机械比对。“km”译作“公里”、阿拉伯数字“14”写成“十四”，都会报为缺失，是否属于合理改写由人判断；确认的问题另行登记，不把候选发现直接计入问题统计。源文或译文以逗号作小数点时，在单元文件中设置 `decimal_mark`。检查范围与未覆盖的内容见 [质量控制与回归](docs/04_质量控制与回归.md)。
 

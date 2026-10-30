@@ -1,0 +1,81 @@
+{
+  "report_type": "merged",
+  "target_version": "demo-draft-1",
+  "inputs": [
+    {
+      "role": "source",
+      "sha256": "c4de9b9a72d6be101841acc9776f6be87eddb775a9300d35aab2b2e25b37a8eb",
+      "units": 12
+    },
+    {
+      "role": "target",
+      "sha256": "d2cc4eb2f9b03725419f84a863363819ee0ca9edb34338c5e48755e513ef7da6",
+      "units": 12
+    },
+    {
+      "role": "glossary",
+      "sha256": "93781e036e10846d048ac9df901a14de1c99161c8d20177b338ef294c521da28",
+      "records": 1
+    },
+    {
+      "role": "glossary",
+      "sha256": "1e28ca7764ac8e0392267fd80de3bf412efc0340aa13c23b1269cf25465d11b0",
+      "records": 1
+    }
+  ],
+  "checks_run": [
+    "structure",
+    "numbers",
+    "symbols",
+    "markers",
+    "terms"
+  ],
+  "skipped_checks": [],
+  "synthetic": true,
+  "findings": [
+    {
+      "unit_id": "UNIT-DEMO-001",
+      "locator": "Clause 1",
+      "family": "TERMS",
+      "code": "term-missing",
+      "origin": "program",
+      "severity_suggestion": "unrated",
+      "status": "candidate",
+      "refs": [
+        "TERM-DEMO-001"
+      ],
+      "detail": {
+        "candidate": "共用果园规则"
+      }
+    },
+    {
+      "unit_id": "UNIT-DEMO-001",
+      "locator": "Clause 1",
+      "family": "TERMS",
+      "code": "term-alternate",
+      "origin": "program",
+      "severity_suggestion": "unrated",
+      "status": "candidate",
+      "refs": [
+        "TERM-DEMO-001"
+      ],
+      "detail": {
+        "alternative": "共享果园规则"
+      }
+    },
+    {
+      "unit_id": "UNIT-DEMO-009",
+      "locator": "Clause 9",
+      "family": "FIDELITY",
+      "code": "possible-modality-shift",
+      "origin": "model",
+      "severity_suggestion": "minor",
+      "status": "candidate",
+      "reason": "源文对罚款用 shall、对暂停用 may，译文须保持“应缴纳”与“可被暂停”的区分。",
+      "suggestion": "译文已保持该区分时无需修改。",
+      "evidence_needed": [
+        "第 9 条源文"
+      ]
+    }
+  ]
+}

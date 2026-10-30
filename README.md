@@ -26,6 +26,7 @@
 - [技术复盘与失败模式](docs/10_技术复盘与失败模式.md)
 - [项目目录整理](docs/11_项目目录整理.md)
 - [通用译审提示词](templates/translation-prompts.md)
+- 记录模板：[接收表](templates/project-intake.blank.json)、[风格说明](templates/style-guide.blank.json)、[术语](templates/term.blank.json)、[批次清单](templates/batch-list.blank.json)、[成本表](templates/cost-sheet.blank.json)、[交付清单](templates/delivery-list.blank.json)、[续接清单](templates/recovery.blank.json)
 - [规则注册表](registry/public.registry.json)
 - [第三方参考](REFERENCES.md)
 

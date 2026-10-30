@@ -1,0 +1,20 @@
+{
+  "status": "draft-template",
+  "project_id": null,
+  "currency": null,
+  "entries": [
+    {
+      "phase": null,
+      "date": null,
+      "hours": null,
+      "model_service_cost": null,
+      "platform_cost": null,
+      "other_external_cost": null,
+      "estimated": null,
+      "estimation_method": null,
+      "recorded_by": null
+    }
+  ],
+  "phase_totals": [],
+  "allocation_method": null
+}

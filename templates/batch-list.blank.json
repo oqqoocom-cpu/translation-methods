@@ -1,0 +1,18 @@
+{
+  "status": "draft-template",
+  "project_id": null,
+  "status_sequence": ["pending", "drafted", "reviewed", "fixed", "regression-passed", "frozen"],
+  "batches": [
+    {
+      "batch_id": null,
+      "units": [],
+      "source_version": null,
+      "target_version": null,
+      "batch_status": "pending",
+      "owner": null,
+      "findings_report": null,
+      "regression_refs": [],
+      "frozen_at": null
+    }
+  ]
+}

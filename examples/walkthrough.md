@@ -4,7 +4,7 @@
 
 ## 案例
 
-虚构的北园议事会有一份《共用果园规则》，英文，约 2000 词，共 12 条。需求方要求译成中文，供内部完整阅读。用途属于 B 级审校交付，选用标准级流程，适用 25 条规则。每一条作为一个稳定单元，编号为 `UNIT-DEMO-001` 至 `UNIT-DEMO-012`。
+虚构的北园议事会有一份《共用果园规则》，英文，约 360 词，共 12 条，见 [源文单元](units/source.json)。需求方要求译成中文，供内部完整阅读。用途属于 B 级审校交付，选用标准级流程，适用 25 条规则。每一条作为一个稳定单元，编号为 `UNIT-DEMO-001` 至 `UNIT-DEMO-012`。
 
 ## 1. 接收与定级
 
@@ -34,7 +34,7 @@ python -B tools/sync_registry.py registry/public.registry.json --snapshot genera
 
 ## 4. 试译与风格说明
 
-试译选第 1、5、9 条，覆盖定义、义务句和违约后果；第 9 条是本项目唯一的高风险内容。试译同时确认风格说明 v1：正式书面语域；保留条款编号；“shall”统一译为“应”；机构名首次出现时附源文名称。责任人确认后才扩大到全部 12 条。之后改动风格，须先评估返工范围。
+试译选第 1、5、9 条，覆盖定义、义务句和违约后果；第 9 条是本项目唯一的高风险内容。试译同时确认 [风格说明](../templates/style-guide.blank.json) v1：正式书面语域；保留条款编号；“shall”统一译为“应”；机构名首次出现时附源文名称。责任人确认后才扩大到全部 12 条。之后改动风格，须先评估返工范围。
 
 对应规则：`PILOT-001`、`STYLE-001`。
 
@@ -51,7 +51,9 @@ python -B tools/sync_registry.py registry/public.registry.json --snapshot genera
 
 主译逐条生成 `demo-draft-1`，只提供与当前条款相关的上下文。主译、忠实度、术语专名、受保护要素和目标语编辑五层分轮记录；审校各层在未继承翻译上下文的新会话中进行。每轮结果先写入文件，更新恢复清单后再轮换会话；新会话只凭恢复清单和规范源续接。
 
-术语专名审校发现，第 1 条写入了“共享果园规则”，而该术语仍是候选。示范程序把候选状态误当作锁定，登记为 `ISS-DEMO-001`，严重度 `major`。
+术语审校前，对照检查器按当时仍为候选的 `TERM-DEMO-001` 在第 1 条报出 `term-pending`，只提示待定，不作强制核对。术语专名审校随后发现，第 1 条写入了登记的异译“共享果园规则”，而该术语仍是候选。示范程序把候选状态误当作锁定，登记为 `ISS-DEMO-001`，严重度 `major`。
+
+忠实度审校在第 9 条提出 `possible-modality-shift`：源文对罚款用 shall、对暂停用 may。责任人确认译文已区分“应缴纳”与“可被暂停”，不修改，也不登记问题。
 
 对应规则：`CONTEXT-001`、`REVIEW-001`、`REVIEW-002`、`SESSION-001`。
 
@@ -68,6 +70,8 @@ python -B tools/check_translation.py --source examples/units/source.json --targe
 
 `demo-draft-1` 报出 2 条候选问题，都在 `UNIT-DEMO-001`，都指向 `TERM-DEMO-001`：`term-missing` 表示锁定译名没有出现，`term-alternate` 表示登记的异译混入，退出码为 1。`demo-draft-2` 没有发现，退出码为 0。没有发现只说明这些机械检查未报错；机构名首次出现是否附源文名称、译文是否忠实，仍由分层审校判断。两方面结果合起来，确认只有第 1 条受影响且已修复。责任人确认后，`ISS-DEMO-001` 关闭。
 
+术语锁定后，`demo-draft-1` 上的 `term-pending` 由这两条发现取代。两条程序发现与第 9 条的模型发现合并为 [发现清单](findings.synthetic.json)，状态都是 `candidate`；`demo-draft-2` 的检查结果是 `REG-DEMO-001` 的证据之一。
+
 对应规则：`GOV-004`、`TERM-001`、`ERROR-001`。
 
 ## 8. 质量检查
@@ -78,7 +82,7 @@ python -B tools/check_translation.py --source examples/units/source.json --targe
 
 ## 9. 交付
 
-交付前再刷新一次快照，结果见 [交付快照](application.synthetic.json)：阶段为 `delivery`，25 条中 21 条适用并通过，4 条依 `DEC-DEMO-002` 不适用。这 4 条的 `acceptance` 也是 `passed`，表示不适用判断本身已经验收。交付清单列出正式文件的版本、责任人、用途、检查状态与字节哈希。
+交付前再刷新一次快照，结果见 [交付快照](application.synthetic.json)：阶段为 `delivery`，25 条中 21 条适用并通过，4 条依 `DEC-DEMO-002` 不适用。这 4 条的 `acceptance` 也是 `passed`，表示不适用判断本身已经验收。[交付清单](../templates/delivery-list.blank.json) 列出正式文件的版本、责任人、用途、检查状态与字节哈希。
 
 ```powershell
 python -B tools/validate_assets.py --kind application --file examples/application.synthetic.json
@@ -90,7 +94,8 @@ python -B tools/validate_assets.py --kind application --file examples/applicatio
 
 ## 10. 过程记录与复盘
 
-- 成本按阶段汇总工时与模型服务费用；模型费用无法按阶段拆分时，按调用量分摊并注明方法。
+- 成本按阶段记入 [成本表](../templates/cost-sheet.blank.json)，汇总工时与模型服务费用；模型费用无法按阶段拆分时，按调用量分摊并注明方法。
+- 12 条作为一个批次记入 [批次清单](../templates/batch-list.blank.json)；第 1 条修复并通过回归后，该批次才冻结。
 - 每阶段结束盘点新增文件，标为正式、候选、可重生成或待归档，并与恢复清单核对。
 - `ISS-DEMO-001` 的修复规则是“成稿译名只能来自锁定条目”。`TERM-001` 已要求区分候选与锁定状态，因此只增加项目级检查，不新增公共规则候选。
 

@@ -43,7 +43,7 @@ class SchemaTests(unittest.TestCase):
             validator(path.name.removesuffix(".schema.json"))
 
     def test_positive_examples(self):
-        for kind in ["term", "entity", "decision", "issue", "quality-report"]:
+        for kind in ["term", "entity", "decision", "issue", "quality-report", "findings"]:
             with self.subTest(kind=kind):
                 value = fixture(kind)
                 self.assertTrue(value["synthetic"])
@@ -489,7 +489,11 @@ class PackagingTests(unittest.TestCase):
                 self.assertIsNone(RISK_PATTERNS["local-path"].search(value))
 
     def test_templates_are_deliberately_incomplete(self):
-        for path in (ROOT / "templates").glob("*.blank.json"):
+        paths = sorted((ROOT / "templates").glob("*.blank.json"))
+        self.assertEqual({path.name.removesuffix(".blank.json") for path in paths}, {
+            "project-intake", "style-guide", "batch-list", "cost-sheet", "delivery-list", "recovery", "term",
+        })
+        for path in paths:
             value = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(value.get("template_status", value.get("status")), "draft-template")
 

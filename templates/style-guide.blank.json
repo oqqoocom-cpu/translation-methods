@@ -1,0 +1,25 @@
+{
+  "status": "draft-template",
+  "project_id": null,
+  "style_version": null,
+  "source_language": null,
+  "target_language": null,
+  "readers": null,
+  "purpose": null,
+  "register": null,
+  "structure_markers": null,
+  "fixed_renderings": [
+    {
+      "source": null,
+      "target": null,
+      "note": null
+    }
+  ],
+  "first_mention_rule": null,
+  "numbers_and_units": null,
+  "punctuation": null,
+  "forbidden_changes": [],
+  "pilot_units": [],
+  "approved_by": null,
+  "approved_at": null
+}

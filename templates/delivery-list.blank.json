@@ -1,0 +1,23 @@
+{
+  "status": "draft-template",
+  "project_id": null,
+  "delivery_version": null,
+  "process_tier": null,
+  "files": [
+    {
+      "path": null,
+      "version": null,
+      "role": null,
+      "owner": null,
+      "purpose": null,
+      "check_status": null,
+      "sha256": null
+    }
+  ],
+  "quality_report": null,
+  "registry_application": null,
+  "open_items": [],
+  "excluded_items": [],
+  "approved_by": null,
+  "delivered_at": null
+}

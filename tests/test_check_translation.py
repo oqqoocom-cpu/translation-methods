@@ -107,6 +107,34 @@ class DemoTests(unittest.TestCase):
             self.assertEqual([unit["unit_id"] for unit in value["units"]], ids)
         self.assertTrue(all(value["synthetic"] for value in (source, first, second)))
 
+    def test_candidate_term_is_only_pending_on_draft_1(self):
+        # Before DEC-DEMO-001 the term was a candidate: the check prompts, it does not enforce.
+        term = json.loads(GLOSSARY[0].read_text(encoding="utf-8"))
+        term["status"] = "candidate"
+        for key in ["decision_id", "decision_reason", "verified_at"]:
+            del term[key]
+        validate("term", term)
+        source, draft = (json.loads((UNITS / name).read_text(encoding="utf-8")) for name in ["source.json", "draft-1.json"])
+        result = run_checks(source, draft, [term])
+        self.assertEqual(
+            [(item["unit_id"], item["code"], item["refs"], item["detail"]) for item in result["findings"]],
+            [("UNIT-DEMO-001", "term-pending", ["TERM-DEMO-001"], {"status": "candidate"})],
+        )
+
+    def test_merged_findings_example_matches_program_output(self):
+        example = json.loads((ROOT / "examples/findings.synthetic.json").read_text(encoding="utf-8"))
+        validate("findings", example)
+        report, _ = check_files(UNITS / "source.json", UNITS / "draft-1.json", GLOSSARY)
+        self.assertEqual(example["report_type"], "merged")
+        for key in ["target_version", "inputs", "checks_run", "skipped_checks", "synthetic"]:
+            with self.subTest(key=key):
+                self.assertEqual(example[key], report[key])
+        program = [item for item in example["findings"] if item["origin"] == "program"]
+        self.assertEqual(program, report["findings"])
+        self.assertEqual({item["origin"] for item in example["findings"]}, {"program", "model"})
+        issue = json.loads((ROOT / "examples/issue.synthetic.json").read_text(encoding="utf-8"))
+        self.assertEqual(example["target_version"], issue["affected_versions"][0])
+
 
 class StructureTests(unittest.TestCase):
     def test_missing_extra_and_order(self):
