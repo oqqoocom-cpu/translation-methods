@@ -42,6 +42,18 @@ python -B tools/sync_registry.py registry/public.registry.json --markdown genera
 
 输出路径必须尚不存在。快照只包含所选等级的规则，每条规则初始为待核状态，适用性、例外、证据和阶段验收须在私有项目记录。演示输出留在忽略目录，发布检查会把它视为未知文件；演示完成后自行保管到私有项目，不把生成物加入公开清单。
 
+## 对照源文与译文
+
+源文和译文各存一份单元文件，结构见 [units Schema](schemas/units.schema.json)。两份文件使用相同的稳定单元编号，检查器按编号对齐，不靠行号或段落顺序猜测对应关系。
+
+```powershell
+python -B tools/check_translation.py --source examples/units/source.json --target examples/units/draft-1.json --glossary examples/term.synthetic.json --glossary examples/entity.synthetic.json --report generated/findings.json
+```
+
+屏幕只显示检查项、计数、单元编号、问题代码和相关编号，不回显原文或译文；完整结果写入报告文件，报告与快照一样留在忽略目录。退出码 0 表示已运行的检查未发现问题，1 表示有候选问题，2 表示输入无效、报告文件已存在或没有任何检查得以运行。不加 `--glossary` 时跳过术语检查，屏幕显示 `skipped=terms:no-glossary`。
+
+检查只作机械比对。“km”译作“公里”、阿拉伯数字“14”写成“十四”，都会报为缺失，是否属于合理改写由人判断；确认的问题另行登记，不把候选发现直接计入问题统计。源文或译文以逗号作小数点时，在单元文件中设置 `decimal_mark`。检查范围与未覆盖的内容见 [质量控制与回归](docs/04_质量控制与回归.md)。
+
 ## 哪些事情仍需人完成
 
 来源核实、领域判断、原文忠实度、未决问题裁决、语种专家复核、逐页版式和传播许可均不由这些工具自动完成。模型共识、回译、Schema 验证和字节哈希各有用途，但都不能单独证明翻译质量。

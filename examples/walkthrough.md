@@ -59,7 +59,14 @@ python -B tools/sync_registry.py registry/public.registry.json --snapshot genera
 
 责任人以 `DEC-DEMO-001` 同时裁决两件事：`TERM-DEMO-001` 锁定为“共用果园规则”；机构名称冲突按作者用语处理，官方名称留在实体记录，首次出现按风格说明附源文名称，不加译注。`ENT-DEMO-001` 的官方名称状态据此记为 `verified`。修复后生成 `demo-draft-2`。
 
-同样的根因可能出现在其他条款，回归 `REG-DEMO-001` 因此覆盖全部 12 条，检查锁定术语、候选译名残留和机构名称，确认只有第 1 条受影响且已修复。责任人确认后，`ISS-DEMO-001` 关闭。
+同样的根因可能出现在其他条款，回归 `REG-DEMO-001` 因此覆盖全部 12 条，检查锁定术语、候选译名残留和机构名称。其中的字面核对用对照检查器完成，源文与两版底稿见 [源文单元](units/source.json)、[底稿 1](units/draft-1.json) 和 [底稿 2](units/draft-2.json)：
+
+```powershell
+python -B tools/check_translation.py --source examples/units/source.json --target examples/units/draft-1.json --glossary examples/term.synthetic.json --glossary examples/entity.synthetic.json
+python -B tools/check_translation.py --source examples/units/source.json --target examples/units/draft-2.json --glossary examples/term.synthetic.json --glossary examples/entity.synthetic.json
+```
+
+`demo-draft-1` 报出 2 条候选问题，都在 `UNIT-DEMO-001`，都指向 `TERM-DEMO-001`：`term-missing` 表示锁定译名没有出现，`term-alternate` 表示登记的异译混入，退出码为 1。`demo-draft-2` 没有发现，退出码为 0。没有发现只说明这些机械检查未报错；机构名首次出现是否附源文名称、译文是否忠实，仍由分层审校判断。两方面结果合起来，确认只有第 1 条受影响且已修复。责任人确认后，`ISS-DEMO-001` 关闭。
 
 对应规则：`GOV-004`、`TERM-001`、`ERROR-001`。
 

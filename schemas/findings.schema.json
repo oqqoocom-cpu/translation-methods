@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["findings"],
+  "properties": {
+    "report_type": {"enum": ["program-check", "model-review", "human-review", "merged"]},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"$ref": "common.schema.json#/$defs/text"},
+        "version": {"$ref": "common.schema.json#/$defs/text"}
+      }
+    },
+    "target_version": {"$ref": "common.schema.json#/$defs/text"},
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["role", "sha256"],
+        "properties": {
+          "role": {"enum": ["source", "pivot", "target", "glossary"]},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "units": {"type": "integer", "minimum": 0},
+          "records": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "checks_run": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/code"}},
+    "skipped_checks": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["code", "reason"],
+        "properties": {
+          "code": {"$ref": "#/$defs/code"},
+          "reason": {"$ref": "#/$defs/code"}
+        }
+      }
+    },
+    "synthetic": {"type": "boolean"},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}}
+  },
+  "$defs": {
+    "code": {"type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$"},
+    "finding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["unit_id", "family", "code", "origin", "severity_suggestion", "status"],
+      "properties": {
+        "unit_id": {"$ref": "common.schema.json#/$defs/id"},
+        "locator": {"$ref": "common.schema.json#/$defs/text"},
+        "family": {"enum": ["STRUCTURE", "PROTECTED", "HIGH-RISK", "TERMS", "FIDELITY", "LAYOUT", "STYLE"]},
+        "code": {"$ref": "#/$defs/code"},
+        "origin": {"enum": ["program", "model", "human"]},
+        "severity_suggestion": {"enum": ["critical", "major", "minor", "preference", "unrated"]},
+        "status": {"const": "candidate"},
+        "refs": {"$ref": "common.schema.json#/$defs/ids"},
+        "detail": {"type": "object"},
+        "reason": {"$ref": "common.schema.json#/$defs/text"},
+        "suggestion": {"$ref": "common.schema.json#/$defs/text"},
+        "evidence_needed": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/text"}}
+      }
+    }
+  }
+}

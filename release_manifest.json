@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "scope": "generic-methods-only",
   "self_excluded": true,
   "files": [
@@ -40,13 +40,13 @@
     },
     {
       "path": "QUICKSTART.md",
-      "sha256": "f210ba2b86ede3d7b433ccc079827a1c0b2692ac47e9eab9da305e287ff5b858",
-      "size_bytes": 3675
+      "sha256": "ba4ea7f0c7f6334d94bba3a66618aec4ac7b1376692ef31d508f050aa7b678aa",
+      "size_bytes": 5016
     },
     {
       "path": "README.md",
-      "sha256": "dc952ff997c23f2668d80e0a7e17f14099c19e9eeead6b7fa0e884c2c6265df2",
-      "size_bytes": 3923
+      "sha256": "65037215bed556ada52c1cd604a07f88281e48c8c9a19c2f5073006fe7788778",
+      "size_bytes": 4444
     },
     {
       "path": "REFERENCES.md",
@@ -75,8 +75,8 @@
     },
     {
       "path": "docs/04_质量控制与回归.md",
-      "sha256": "a99ef530e75035c7022d18673b0276ba0a94b0b20321409c9e958c5698461775",
-      "size_bytes": 3502
+      "sha256": "3ae1966d321a2129be7c13ca58ce9210291bb4c5a3f8ae0ec37c190bf89cedf5",
+      "size_bytes": 4383
     },
     {
       "path": "docs/05_多模型协作.md",
@@ -85,8 +85,8 @@
     },
     {
       "path": "docs/06_数据模型与目录.md",
-      "sha256": "4a07baa5b4093f0be3894ab0565be4a003e1160d3bdd105c6e13cfe1a53749cf",
-      "size_bytes": 2117
+      "sha256": "0e7e3aafd34f075f480b0613ac23381f6f1c15c939357857f4ba6641802721a1",
+      "size_bytes": 2545
     },
     {
       "path": "docs/07_排版与交付.md",
@@ -144,9 +144,24 @@
       "size_bytes": 804
     },
     {
+      "path": "examples/units/draft-1.json",
+      "sha256": "d2cc4eb2f9b03725419f84a863363819ee0ca9edb34338c5e48755e513ef7da6",
+      "size_bytes": 2449
+    },
+    {
+      "path": "examples/units/draft-2.json",
+      "sha256": "8f2a71a13997b065819915e5beca9a1295a20115f570920c41a220e4162b0b3a",
+      "size_bytes": 2449
+    },
+    {
+      "path": "examples/units/source.json",
+      "sha256": "c4de9b9a72d6be101841acc9776f6be87eddb775a9300d35aab2b2e25b37a8eb",
+      "size_bytes": 2978
+    },
+    {
       "path": "examples/walkthrough.md",
-      "sha256": "4bab3413988b1d343e968354fdd738ec99e2292cef9f337bfd485b3f94ddc310",
-      "size_bytes": 7952
+      "sha256": "57793f8c7fafbd16f810c9a485b4f893373f2d276dcccf42c28b422ebc935ce5",
+      "size_bytes": 8959
     },
     {
       "path": "registry/public.registry.json",
@@ -184,6 +199,11 @@
       "size_bytes": 1962
     },
     {
+      "path": "schemas/findings.schema.json",
+      "sha256": "4a33d6fe74fadf784817b4736b6f31428dba68395f444e9849178765aee8a972",
+      "size_bytes": 2645
+    },
+    {
       "path": "schemas/issue.schema.json",
       "sha256": "4f61193bf74e581382f5dbb61c0171f7ebcacd11de893eb43c679b6647957591",
       "size_bytes": 1687
@@ -202,6 +222,11 @@
       "path": "schemas/term.schema.json",
       "sha256": "aecc2cb7cdee960ff4d55452cd11c1484311b5662a73403fddb673dad14f8b16",
       "size_bytes": 1868
+    },
+    {
+      "path": "schemas/units.schema.json",
+      "sha256": "47e75a8ecac53097954baacf0b82eb558f76426873d8fc03ebe971f6b148c0d8",
+      "size_bytes": 827
     },
     {
       "path": "templates/project-intake.blank.json",
@@ -224,6 +249,11 @@
       "size_bytes": 3285
     },
     {
+      "path": "tests/test_check_translation.py",
+      "sha256": "f8d37b26ce625cd7cea70751dc67055bdeae17a19702654fb4100e294d7ea96b",
+      "size_bytes": 24018
+    },
+    {
       "path": "tests/test_public_assets.py",
       "sha256": "8de1824ea55efd49dd324b58968822489c96668d1fb20b3e6e84d8a6bd949570",
       "size_bytes": 23106
@@ -239,14 +269,19 @@
       "size_bytes": 6394
     },
     {
+      "path": "tools/check_translation.py",
+      "sha256": "b364b72e2f84414ad0fc3d3a48756746485aedc5de5d026ca2fa353b3e0b6ff5",
+      "size_bytes": 24013
+    },
+    {
       "path": "tools/sync_registry.py",
       "sha256": "ee3343fa5c1d6d9ea956410199f895a8f75914cef568d5ad8ee3565d805c999e",
       "size_bytes": 4820
     },
     {
       "path": "tools/validate_assets.py",
-      "sha256": "9a3a64b2e0967bad5104c948b90b47a5f51dc09ed0bea5c053de4c8272e8666e",
-      "size_bytes": 6274
+      "sha256": "0a64825f2bf23f899ac5673697d076fae47fd986389847575399d1044c12a087",
+      "size_bytes": 6410
     }
   ]
 }

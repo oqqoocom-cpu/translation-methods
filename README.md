@@ -1,6 +1,6 @@
 # 通用翻译方法与工具
 
-版本：0.4.0。仓库名称：`translation-methods`。许可证：代码采用 MIT，文档、模板和虚构示例采用 CC BY 4.0，详见 [许可证说明](LICENSE.md)。
+版本：0.5.0，规则注册表仍为 0.4.0。仓库名称：`translation-methods`。许可证：代码采用 MIT，文档、模板和虚构示例采用 CC BY 4.0，详见 [许可证说明](LICENSE.md)。
 
 本库整理可复用的翻译工作流、术语管理、质量控制、译审提示词、记录模板与检查工具，面向一般文档、技术资料、商务文本、文学与学术材料等翻译任务，不限于学术翻译。
 
@@ -31,17 +31,18 @@
 
 ## 工具范围
 
-要求 Python 3.10 或更高版本，结构验证依赖 `jsonschema`。工具只验证结构和部分状态约束，不能核实权威来源、专家能力或语义正确性，也不能自动授予翻译、传播或调用外部服务的权限。
+要求 Python 3.10 或更高版本，结构验证依赖 `jsonschema`。`validate_assets.py` 验证记录结构和部分状态约束；`check_translation.py` 按稳定单元对照源文与译文，机械检查结构、数字、单位符号、标记和已裁决的术语。工具不能核实权威来源、专家能力或语义正确性，也不能自动授予翻译、传播或调用外部服务的权限。
 
 ```powershell
 python -m pip install -r requirements.txt
 python -B -m unittest discover -s tests -v
 python -B tools/validate_assets.py
 python -B tools/check_release.py
+python -B tools/check_translation.py --source examples/units/source.json --target examples/units/draft-2.json --glossary examples/term.synthetic.json --glossary examples/entity.synthetic.json
 python -B tools/sync_registry.py registry/public.registry.json --markdown generated/registry.md --snapshot generated/application.json --project-id DEMO-NEW --phase intake --tier standard
 ```
 
-输出必须是尚不存在的新文件。快照只包含所选流程等级的规则，其中的 `pending` 是“待验收”，不是已通过。工具不会调用云端翻译服务，也不提供 API 密钥配置。
+输出必须是尚不存在的新文件。快照只包含所选流程等级的规则，其中的 `pending` 是“待验收”，不是已通过。对照检查的每条发现都是待人判断的候选问题；没有发现只说明这些机械检查未报错，不表示译文合格。工具不会调用云端翻译服务，也不提供 API 密钥配置。
 
 ## 发布边界
 

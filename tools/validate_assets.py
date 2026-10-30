@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -27,7 +28,9 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=unique_object)
 
 
+@lru_cache(maxsize=None)
 def validator(kind: str) -> Draft202012Validator:
+    # Built once per kind and process; large glossaries validate many records.
     schemas = ROOT / "schemas"
     path = schemas / f"{kind}.schema.json"
     if path.parent != schemas or not path.is_file():
