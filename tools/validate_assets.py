@@ -6,13 +6,26 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from jsonschema import Draft202012Validator, FormatChecker
-from referencing import Registry, Resource
+# A missing dependency is reported by each command as one install hint, not as a traceback.
+try:
+    from jsonschema import Draft202012Validator, FormatChecker
+    from referencing import Registry, Resource
+except ModuleNotFoundError as exc:
+    _MISSING_DEPENDENCY = exc.name or "jsonschema"
+else:
+    _MISSING_DEPENDENCY = None
 
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_CHECKS = {"STRUCTURE", "PROTECTED", "HIGH-RISK", "TERMS", "FIDELITY", "LAYOUT"}
 TIERS = ("light", "standard", "full")
+
+
+def missing_dependency_hint() -> str | None:
+    """Return a one-line install hint when jsonschema or referencing is missing."""
+    if _MISSING_DEPENDENCY is None:
+        return None
+    return f"missing_dependency={_MISSING_DEPENDENCY}; run: python -m pip install -r requirements.txt"
 
 
 def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -31,6 +44,8 @@ def load_json(path: Path) -> dict[str, Any]:
 @lru_cache(maxsize=None)
 def validator(kind: str) -> Draft202012Validator:
     # Built once per kind and process; large glossaries validate many records.
+    if _MISSING_DEPENDENCY is not None:
+        raise ModuleNotFoundError(missing_dependency_hint(), name=_MISSING_DEPENDENCY)
     schemas = ROOT / "schemas"
     path = schemas / f"{kind}.schema.json"
     if path.parent != schemas or not path.is_file():
@@ -119,6 +134,10 @@ def main() -> int:
     parser.add_argument("--file", type=Path)
     parser.add_argument("--registry", type=Path)
     args = parser.parse_args()
+    hint = missing_dependency_hint()
+    if hint:
+        print(hint)
+        return 1
     try:
         if bool(args.kind) != bool(args.file):
             raise ValueError("--kind and --file must be supplied together")

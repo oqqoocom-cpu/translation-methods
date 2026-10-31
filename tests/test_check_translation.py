@@ -18,6 +18,10 @@ from tools.check_translation import (
 )
 from tools.validate_assets import validate, validator
 
+# The tools refuse paths through linked directories. On macOS the default temp dir sits
+# under the symlink /var, so the tests work in its resolved path.
+tempfile.tempdir = str(Path(tempfile.gettempdir()).resolve())
+
 UNITS = ROOT / "examples/units"
 GLOSSARY = [ROOT / "examples/term.synthetic.json", ROOT / "examples/entity.synthetic.json"]
 TOOL = ROOT / "tools/check_translation.py"

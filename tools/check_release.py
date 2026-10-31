@@ -12,7 +12,7 @@ from urllib.parse import unquote, urlsplit
 
 MANIFEST = "release_manifest.json"
 ROOT = Path(__file__).resolve().parents[1]
-TEXT_TYPES = {".py", ".json", ".md", ".txt"}
+TEXT_TYPES = {".py", ".json", ".md", ".txt", ".yml"}
 SPECIAL = {".gitignore", ".gitattributes"}
 RISK_PATTERNS = {
     # ASCII lookarounds, not \b: in Python, CJK characters count as word characters,

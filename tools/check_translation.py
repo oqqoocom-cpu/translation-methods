@@ -20,12 +20,12 @@ from typing import Any, Iterable
 
 try:
     from .sync_registry import write_new_outputs
-    from .validate_assets import unique_object, validate
+    from .validate_assets import missing_dependency_hint, unique_object, validate
 except ImportError:
     from sync_registry import write_new_outputs
-    from validate_assets import unique_object, validate
+    from validate_assets import missing_dependency_hint, unique_object, validate
 
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 CHECKS = ("structure", "numbers", "symbols", "markers", "terms")
 FAMILY = {
     "structure": "STRUCTURE", "numbers": "PROTECTED", "symbols": "PROTECTED", "markers": "PROTECTED",
@@ -491,6 +491,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--report", type=Path, help="new JSON file for the full findings report")
     parser.add_argument("--length-factor", type=_factor_arg, default=2.0)
     args = parser.parse_args(argv)
+    hint = missing_dependency_hint()
+    if hint:
+        # No check can run without schema validation; exit 2 like any other run without checks.
+        print(hint)
+        return 2
     try:
         report, stats = check_files(args.source, args.target, args.glossary, args.checks, args.length_factor)
         if args.report:

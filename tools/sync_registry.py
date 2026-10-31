@@ -8,9 +8,9 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from .validate_assets import TIERS, load_json, rules_for_tier, validate, validate_application
+    from .validate_assets import TIERS, load_json, missing_dependency_hint, rules_for_tier, validate, validate_application
 except ImportError:
-    from validate_assets import TIERS, load_json, rules_for_tier, validate, validate_application
+    from validate_assets import TIERS, load_json, missing_dependency_hint, rules_for_tier, validate, validate_application
 
 
 def canonical_json(value: Any) -> bytes:
@@ -86,6 +86,10 @@ def main() -> int:
     parser.add_argument("--phase", choices=["intake", "pilot-release", "full-translation", "layout", "delivery"])
     parser.add_argument("--tier", choices=TIERS)
     args = parser.parse_args()
+    hint = missing_dependency_hint()
+    if hint:
+        print(hint)
+        return 1
     try:
         registry = load_json(args.registry)
         validate("registry", registry)

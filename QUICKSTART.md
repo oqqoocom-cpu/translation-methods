@@ -21,7 +21,21 @@
 
 ## 先运行虚构示例
 
-要求 Python 3.10 或更高版本；安装依赖后，在方法库目录运行：
+要求 Python 3.10 或更高版本。虚拟环境建在仓库外，否则发布检查会把其中文件视为未知文件。在方法库目录运行以下命令，在上一级目录建立并激活虚拟环境。Windows PowerShell：
+
+```powershell
+python -m venv ..\tm-venv
+..\tm-venv\Scripts\Activate.ps1
+```
+
+macOS 或 Linux：
+
+```bash
+python3 -m venv ../tm-venv
+source ../tm-venv/bin/activate
+```
+
+激活后各平台都用 `python`。PowerShell 不允许运行激活脚本时，可不激活，直接用 `..\tm-venv\Scripts\python.exe` 代替下文的 `python`。
 
 ```powershell
 python -m pip install -r requirements.txt
@@ -29,6 +43,8 @@ python -B -m unittest discover -s tests -v
 python -B tools/validate_assets.py
 python -B tools/check_release.py
 ```
+
+缺少依赖时，`validate_assets.py`、`check_translation.py` 和 `sync_registry.py` 只打印一行安装提示，不生成输出文件：`missing_dependency=jsonschema; run: python -m pip install -r requirements.txt`。
 
 `validate_assets.py` 验证注册表和虚构示例的结构与部分状态依赖。`check_release.py` 检查仓库发布白名单、哈希、链接和已知风险模式；出现未知文件即退回检查，不自动删除。
 
@@ -50,7 +66,7 @@ python -B tools/sync_registry.py registry/public.registry.json --markdown genera
 python -B tools/check_translation.py --source examples/units/source.json --target examples/units/draft-1.json --glossary examples/term.synthetic.json --glossary examples/entity.synthetic.json --report generated/findings.json
 ```
 
-屏幕只显示检查项、计数、单元编号、问题代码和相关编号，不回显原文或译文；完整结果写入报告文件，报告与快照一样留在忽略目录。退出码 0 表示已运行的检查未发现问题，1 表示有候选问题，2 表示输入无效、报告文件已存在或没有任何检查得以运行。不加 `--glossary` 时跳过术语检查，屏幕显示 `skipped=terms:no-glossary`。
+屏幕只显示检查项、计数、单元编号、问题代码和相关编号，不回显原文或译文；完整结果写入报告文件，报告与快照一样留在忽略目录。退出码 0 表示已运行的检查未发现问题，1 表示有候选问题，2 表示输入无效、缺少依赖、报告文件已存在或没有任何检查得以运行。不加 `--glossary` 时跳过术语检查，屏幕显示 `skipped=terms:no-glossary`。
 
 示例中 `draft-1` 的退出码为 1，报出 2 条术语发现，都在 `UNIT-DEMO-001`；换成 `draft-2` 时退出码为 0。原命令再次运行会因报告已存在返回 2，须换一个新文件名。运行发布检查前，先把 `generated/` 移出仓库或删除。
 

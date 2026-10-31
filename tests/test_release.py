@@ -6,6 +6,10 @@ from pathlib import Path
 
 from tools.check_release import MANIFEST, check_release, relative_name, unique_object
 
+# The tools refuse paths through linked directories. On macOS the default temp dir sits
+# under the symlink /var, so the tests work in its resolved path.
+tempfile.tempdir = str(Path(tempfile.gettempdir()).resolve())
+
 
 class ReleaseTests(unittest.TestCase):
     def setUp(self):
@@ -38,6 +42,20 @@ class ReleaseTests(unittest.TestCase):
     def test_unlisted_hidden_file(self):
         (self.root / ".hidden").write_bytes(b"no")
         with self.assertRaises(ValueError):
+            check_release(self.root)
+
+    def test_listed_workflow_file_accepted(self):
+        raw = b"name: CI\non: [push]\n"
+        (self.root / ".github/workflows").mkdir(parents=True)
+        (self.root / ".github/workflows/ci.yml").write_bytes(raw)
+        self.manifest["files"].append({"path": ".github/workflows/ci.yml",
+                                       "sha256": hashlib.sha256(raw).hexdigest(), "size_bytes": len(raw)})
+        self.save()
+        self.assertEqual(check_release(self.root)["files"], 3)
+
+    def test_yaml_suffix_not_approved(self):
+        (self.root / "ci.yaml").write_bytes(b"name: CI\n")
+        with self.assertRaisesRegex(ValueError, "unapproved-type"):
             check_release(self.root)
 
     def test_ignored_private_file_still_refused(self):

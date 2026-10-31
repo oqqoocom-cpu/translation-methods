@@ -18,6 +18,10 @@ from tools.sync_registry import make_snapshot, registry_hash, render_markdown, w
 from tools.validate_assets import TIERS, load_json, rules_for_tier, validate, validate_application, validator
 from tools.check_release import RISK_PATTERNS, check_release
 
+# The tools refuse paths through linked directories. On macOS the default temp dir sits
+# under the symlink /var, so the tests work in its resolved path.
+tempfile.tempdir = str(Path(tempfile.gettempdir()).resolve())
+
 
 def fixture(kind: str) -> dict:
     return json.loads((ROOT / "examples" / f"{kind}.synthetic.json").read_text(encoding="utf-8"))
@@ -527,6 +531,37 @@ class PackagingTests(unittest.TestCase):
         section = (ROOT / "examples/walkthrough.md").read_text(encoding="utf-8").rsplit("\n## ", 1)[1]
         listed = set(rule_id_pattern({rule["id"] for rule in value["requirements"]}).findall(section))
         self.assertEqual(listed, set(rules_for_tier(value, "light")))
+
+
+# Runs a tool with jsonschema and referencing blocked, as on a machine without the requirements installed.
+BLOCKED_IMPORT = (
+    "import runpy, sys; sys.modules['jsonschema'] = None; sys.modules['referencing'] = None; "
+    "sys.argv = sys.argv[1:]; sys.path.insert(0, str(__import__('pathlib').Path(sys.argv[0]).parent)); "
+    "runpy.run_path(sys.argv[0], run_name='__main__')"
+)
+
+
+class DependencyTests(unittest.TestCase):
+    def test_missing_jsonschema_prints_install_hint(self):
+        units = ROOT / "examples/units"
+        hint = "missing_dependency=jsonschema; run: python -m pip install -r requirements.txt"
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "out.json"
+            for tool, args, code in [
+                ("check_translation.py", ["--source", str(units / "source.json"), "--target",
+                                          str(units / "draft-2.json"), "--report", str(output)], 2),
+                ("validate_assets.py", [], 1),
+                ("sync_registry.py", [str(ROOT / "registry/public.registry.json"), "--snapshot", str(output),
+                                      "--project-id", "DEMO-NEW", "--phase", "intake", "--tier", "light"], 1),
+            ]:
+                with self.subTest(tool=tool):
+                    result = subprocess.run(
+                        [sys.executable, "-B", "-c", BLOCKED_IMPORT, str(ROOT / "tools" / tool), *args],
+                        capture_output=True, text=True,
+                    )
+                    self.assertEqual((result.returncode, result.stdout.strip()), (code, hint), result.stderr)
+                    self.assertNotIn("Traceback", result.stderr)
+                    self.assertFalse(output.exists())
 
 
 if __name__ == "__main__":
