@@ -1,5 +1,5 @@
 {
-  "version": "0.7.0",
+  "version": "0.8.0",
   "scope": "generic-methods-only",
   "self_excluded": true,
   "files": [
@@ -20,8 +20,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "c2a6e30b244b788dbdbbd8b5c52205ae5a7a8f42570e929a0aee4c57cfaa47e2",
-      "size_bytes": 5413
+      "sha256": "3c048472b35951fafff136cd5ef68490d464560314d6648822f7c8693690416d",
+      "size_bytes": 6083
     },
     {
       "path": "CONTRIBUTING.md",
@@ -55,12 +55,12 @@
     },
     {
       "path": "QUICKSTART.md",
-      "sha256": "73fe53c0085d2e25f2648432427f60992c1e93ee69dbbe7a79ca177dd9034b81",
-      "size_bytes": 10270
+      "sha256": "13e16c474705c170480b533c28c5d56bcd17beefd74b6509dc78df8bffc97301",
+      "size_bytes": 10375
     },
     {
       "path": "README.md",
-      "sha256": "5c4edefc663f0d95a1dcaf7baa7d14f671e363c394025549eae70f915c0a6d16",
+      "sha256": "5101821b0cf087930e77f458641b76b5513515cab9a6e4f134afcc8752165078",
       "size_bytes": 5723
     },
     {
@@ -90,8 +90,8 @@
     },
     {
       "path": "docs/04_质量控制与回归.md",
-      "sha256": "ef62c16a00a2ce9d950c1cf92dc41b1c2abaedc2cad6a13d455616112353a742",
-      "size_bytes": 6842
+      "sha256": "d49780efae00288824d14e7eae1e47535d028bb5eb05a9bb4d119cf818e6fdd3",
+      "size_bytes": 7733
     },
     {
       "path": "docs/05_多模型协作.md",
@@ -295,8 +295,8 @@
     },
     {
       "path": "tests/test_check_translation.py",
-      "sha256": "2d0a31523f3d3a2b784a70c3348872c775572d69ef942ea87ee406adfd32b3ba",
-      "size_bytes": 27808
+      "sha256": "95cab7ac269eb9b89fe08536632a2778254a33b281c0f08dd880360ef870c663",
+      "size_bytes": 30795
     },
     {
       "path": "tests/test_export_bilingual.py",
@@ -325,8 +325,8 @@
     },
     {
       "path": "tools/check_translation.py",
-      "sha256": "23567c2562a02d08e2a28fc5731bb2361dade658f14dcf2d0224831ad4feb4de",
-      "size_bytes": 24937
+      "sha256": "0bb7ffed2d0a96e5a709650821e37235772c1ef07faedac57e0efb674ac7e3de",
+      "size_bytes": 26286
     },
     {
       "path": "tools/export_bilingual.py",

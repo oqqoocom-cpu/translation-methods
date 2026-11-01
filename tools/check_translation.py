@@ -25,7 +25,7 @@ except ImportError:
     from sync_registry import write_new_outputs
     from validate_assets import missing_dependency_hint, unique_object, validate
 
-VERSION = "0.7.0"
+VERSION = "0.8.0"
 CHECKS = ("structure", "numbers", "symbols", "markers", "terms")
 FAMILY = {
     "structure": "STRUCTURE", "numbers": "PROTECTED", "symbols": "PROTECTED", "markers": "PROTECTED",
@@ -65,19 +65,28 @@ SYMBOL_RE = re.compile(
 # Chinese count words written after a digit, in simplified and traditional script,
 # with their power of ten: "3.5\u4e07" is read as 35000.
 SCALES = {"\u4e07\u4ebf": 12, "\u842c\u5104": 12, "\u4e07": 4, "\u842c": 4, "\u4ebf": 8, "\u5104": 8}
+# English count words after a digit, on the short scale: "3.5 million" is read as 3500000.
+# They are read in both files, and only when both are tagged en, zh or ja. Count words in
+# other languages are not read ("5 millions", "2 Billionen"), so reading the English side
+# alone would report a correct translation as a difference.
+WORD_SCALES = {"thousand": 3, "million": 6, "billion": 9, "trillion": 12}
+WORD_SCALE_LANGUAGES = ("en", "zh", "ja")
 
 
-def _number_re(decimal_mark: str) -> re.Pattern[str]:
+def _number_re(decimal_mark: str, english: bool = False) -> re.Pattern[str]:
     group = re.escape("," if decimal_mark == "." else ".")
     mark = re.escape(decimal_mark)
-    scale = "|".join(sorted(SCALES, key=len, reverse=True))
+    tail = " ?(?P<scale>" + "|".join(sorted(SCALES, key=len, reverse=True)) + ")"
+    if english:
+        # ASCII-only case folding, so a dotless i (U+0131) does not match "i".
+        tail += "|[ -]?(?P<word>(?ai:" + "|".join(WORD_SCALES) + "))(?![A-Za-z])"
     return re.compile(
         rf"(?<![0-9])(?P<number>(?:[0-9]{{1,3}}(?:{group}[0-9]{{3}})+(?![0-9])|[0-9]+)(?:{mark}[0-9]+)?)"
-        rf"(?: ?(?P<scale>{scale}))?"
+        rf"(?:{tail})?"
     )
 
 
-NUMBER_RE = {mark: _number_re(mark) for mark in ".,"}
+NUMBER_RE = {(mark, english): _number_re(mark, english) for mark in ".," for english in (False, True)}
 
 
 def normalize(text: str) -> str:
@@ -104,6 +113,11 @@ def same_language(first: str, second: str) -> bool:
     """Treat "en", "EN_us" and "en-GB" as one language; "en" and "fr" differ."""
     first, second = (tag.strip().lower().replace("_", "-") for tag in (first, second))
     return first == second or first.startswith(second + "-") or second.startswith(first + "-")
+
+
+def _reads_english_scales(first: str, second: str) -> bool:
+    """Read English count words in both files only when both are tagged en, zh or ja."""
+    return all(any(same_language(tag, known) for known in WORD_SCALE_LANGUAGES) for tag in (first, second))
 
 
 def _word_like(char: str) -> bool:
@@ -164,21 +178,22 @@ def _scan_markers(text: str) -> tuple[Counter, str]:
     return found, "".join(chars)
 
 
-def _canonical_number(raw: str, decimal_mark: str, scale: str | None = None) -> str:
+def _canonical_number(raw: str, decimal_mark: str, scale: str | None = None, word: str | None = None) -> str:
     group = "," if decimal_mark == "." else "."
     whole, _, fraction = raw.replace(group, "").partition(decimal_mark)
-    if scale:
+    places = SCALES[scale] if scale else WORD_SCALES[word.lower()] if word else 0
+    if places:
         # Move the decimal point by the count word's power of ten, on the digit string, so it stays exact.
-        places = SCALES[scale]
         fraction = fraction.ljust(places, "0")
         whole, fraction = whole + fraction[:places], fraction[places:]
     whole, fraction = whole.lstrip("0") or "0", fraction.rstrip("0")
     return whole + "." + fraction if fraction else whole
 
 
-def _count_numbers(masked: str, decimal_mark: str) -> Counter:
+def _count_numbers(masked: str, decimal_mark: str, english: bool = False) -> Counter:
     return Counter(
-        _canonical_number(m["number"], decimal_mark, m["scale"]) for m in NUMBER_RE[decimal_mark].finditer(masked)
+        _canonical_number(m["number"], decimal_mark, m["scale"], m["word"] if english else None)
+        for m in NUMBER_RE[decimal_mark, english].finditer(masked)
     )
 
 
@@ -190,8 +205,9 @@ def extract_markers(text: str) -> Counter:
     return _scan_markers(normalize(text))[0]
 
 
-def extract_numbers(text: str, decimal_mark: str = ".") -> Counter:
-    return _count_numbers(_scan_markers(normalize(text))[1], decimal_mark)
+def extract_numbers(text: str, decimal_mark: str = ".", english_scales: bool = False) -> Counter:
+    """Count numbers by value. english_scales=True also reads "million" and the like after a digit."""
+    return _count_numbers(_scan_markers(normalize(text))[1], decimal_mark, english_scales)
 
 
 def extract_symbols(text: str) -> Counter:
@@ -392,12 +408,13 @@ def run_checks(
                     add("structure", uid, "length-outlier", detail={"ratio": round(ratio, 3), "median": round(median, 3)})
 
     src_mark, tgt_mark = source.get("decimal_mark", "."), target.get("decimal_mark", ".")
+    words = _reads_english_scales(source["language"], target["language"])
     for uid in active:
         src_markers, src_masked = _scan_markers(text[uid][0])
         tgt_markers, tgt_masked = _scan_markers(text[uid][1])
         if "numbers" in requested:
             for side, value, count in _differences(
-                _count_numbers(src_masked, src_mark), _count_numbers(tgt_masked, tgt_mark),
+                _count_numbers(src_masked, src_mark, words), _count_numbers(tgt_masked, tgt_mark, words),
             ):
                 add("numbers", uid, "number-" + side, detail={"value": value, "count": count})
         if "symbols" in requested:

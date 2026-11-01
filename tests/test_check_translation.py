@@ -244,6 +244,53 @@ class ProtectedTests(unittest.TestCase):
             [item["detail"] for item in result["findings"]], [{"value": "35000", "count": 1}, {"value": "36000", "count": 1}],
         )
 
+    def test_english_count_words(self):
+        for text, expected in [
+            ("3.5 million", {"3500000": 1}), ("1.2 billion", {"1200000000": 1}),
+            ("2 trillion", {"2000000000000": 1}), ("5 thousand", {"5000": 1}),
+            ("3.5million", {"3500000": 1}), ("1.5-billion", {"1500000000": 1}),
+            ("3.5 Million", {"3500000": 1}), ("3.5 MILLION", {"3500000": 1}),
+            ("1,000 million", {"1000000000": 1}), ("5\u00a0million", {"5000000": 1}),
+            # Only the number right before the count word is scaled.
+            ("5-10 million", {"5": 1, "10000000": 1}),
+            # Plurals, ordinals, longer words, abbreviations and a dotless i are not read as count words.
+            ("3 millionth", {"3": 1}), ("3 millions", {"3": 1}), ("3 thousandfold", {"3": 1}),
+            ("3m", {"3": 1}), ("3 bn", {"3": 1}), ("3 m\u0131ll\u0131on", {"3": 1}),
+        ]:
+            with self.subTest(text=ascii(text)):
+                self.assertEqual(extract_numbers(text, english_scales=True), Counter(expected))
+        self.assertEqual(extract_numbers("3,5 million", ",", english_scales=True), Counter({"3500000": 1}))
+        # English count words are read only on request.
+        self.assertEqual(extract_numbers("3.5 million"), Counter({"3.5": 1}))
+
+    def test_english_count_words_compared_by_value(self):
+        def findings(source: dict, target: dict) -> list:
+            return run_checks(source, target, checks=["numbers"])["findings"]
+
+        source = doc("source", "en", "Raise 5 million credits.")
+        for language, text in [
+            ("zh", "\u7b79\u96c6500\u4e07\u79ef\u5206\u3002"),
+            ("ja", "500\u4e07\u30af\u30ec\u30b8\u30c3\u30c8\u3002"),
+            ("en-GB", "Raise 5,000,000 credits."),
+            # French count words are not read, so neither side is scaled.
+            ("fr", "Collectez 5 millions de credits."),
+            # English left in a Chinese target is read the same way as in the source.
+            ("zh", "\u7b79\u96c6 5 million \u79ef\u5206\u3002"),
+            ("zh", "Raise 5 million credits."),
+        ]:
+            with self.subTest(language=language, text=ascii(text)):
+                self.assertEqual(findings(source, doc("target", language, text)), [])
+        chinese = doc("source", "zh", "\u7b79\u96c6500\u4e07\u79ef\u5206\u3002")
+        self.assertEqual(findings(chinese, doc("target", "en", "Raise 5 million credits.")), [])
+        german = doc("target", "de", "Ausgaben von 2 Billionen.")
+        self.assertEqual(findings(doc("source", "en", "Spend 2 trillion."), german), [])
+        result = run_checks(source, doc("target", "zh", "\u7b79\u96c65\u4e07\u79ef\u5206\u3002"), checks=["numbers"])
+        self.assertEqual(codes(result), [("UNIT-001", "number-missing"), ("UNIT-001", "number-extra")])
+        self.assertEqual(
+            [item["detail"] for item in result["findings"]],
+            [{"value": "5000000", "count": 1}, {"value": "50000", "count": 1}],
+        )
+
     def test_numbers_compared_by_value_and_count(self):
         source = doc("source", "en", "Pay 1,250 credits within 14 days.", "Use 2.5 kg.")
         target = doc("target", "de", "Zahle 1250 Punkte binnen 15 Tagen.", "Nimm 2,5 kg.", decimal_mark=",")

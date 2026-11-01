@@ -2,9 +2,18 @@
 
 版本号对应 README 的版本行、发布清单的 `version` 和 `tools/check_translation.py` 的 `VERSION`；规则注册表单独编号。
 
-## 0.7.0
+## 0.8.0
 
 日期：2026-11-01。规则注册表仍为 0.4.0。
+
+- `check_translation.py` 识别数字后的英文 thousand、million、billion、trillion，按短级差换算后比较，“3.5 million”与“350万”视为相同。只在源文和译文都标为 en、zh 或 ja 时换算，两侧同时读取；其他语言的计数词不识别，只换算英文一侧会把正确译文报为差异。
+- `extract_numbers` 新增 `english_scales` 参数，默认不换算。
+- [质量控制与回归](docs/04_质量控制与回归.md) 更新比较规则和已知局限，[快速上手](QUICKSTART.md) 同步。
+- 测试从 167 项增至 169 项。
+
+## 0.7.0
+
+日期：2026-11-01。提交：`5840953`。规则注册表仍为 0.4.0。
 
 - 新增 `tools/make_units.py`：把 UTF-8 纯文本或 Markdown 按段落或按行切分为单元文件，Markdown 标题和围栏代码块各成一个单元；不猜测编码，无法按 UTF-8 解码的输入报错退出，不写出文件。新增 [演示源文](examples/units/source.txt)，切分结果的编号和文本与源文单元示例一致。
 - 新增 `tools/export_bilingual.py`：按单元编号把源文与译文导出为 Markdown 或 CSV 对照表，作为阅读副本。CSV 每个单元格加引号，可能被当作公式的单元格前加撇号，做法参照 OWASP 的 CSV 注入说明。
