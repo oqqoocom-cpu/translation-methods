@@ -2,9 +2,21 @@
 
 版本号对应 README 的版本行、发布清单的 `version` 和 `tools/check_translation.py` 的 `VERSION`；规则注册表单独编号。
 
+## 0.7.0
+
+日期：2026-11-01。规则注册表仍为 0.4.0。
+
+- 新增 `tools/make_units.py`：把 UTF-8 纯文本或 Markdown 按段落或按行切分为单元文件，Markdown 标题和围栏代码块各成一个单元；不猜测编码，无法按 UTF-8 解码的输入报错退出，不写出文件。新增 [演示源文](examples/units/source.txt)，切分结果的编号和文本与源文单元示例一致。
+- 新增 `tools/export_bilingual.py`：按单元编号把源文与译文导出为 Markdown 或 CSV 对照表，作为阅读副本。CSV 每个单元格加引号，可能被当作公式的单元格前加撇号，做法参照 OWASP 的 CSV 注入说明。
+- `check_translation.py` 识别数字后的“万”“亿”“万亿”及繁体写法，按数值比较，“3.5万”与“35,000”视为相同。
+- 最低 Python 版本升至 3.11：3.10 已于 2026-10-01 停止维护。持续集成改在 Ubuntu 和 Windows、Python 3.11、3.14 与 3.15 上运行。
+- `.gitignore` 增加 `*.csv`，减少误提交导出表的机会。
+- [快速上手](QUICKSTART.md) 新增“切分源文”和“导出对照表”两节；README、[生命周期](docs/02_项目生命周期.md)、[质量控制与回归](docs/04_质量控制与回归.md)、[数据结构](docs/06_数据模型与目录.md) 和 [虚构项目演练](examples/walkthrough.md) 同步更新。
+- 测试从 128 项增至 167 项。
+
 ## 0.6.0
 
-日期：2026-10-31。规则注册表仍为 0.4.0。
+日期：2026-10-31。提交：`30f3464`。规则注册表仍为 0.4.0。
 
 - 新增 GitHub Actions 持续集成：推送到 `main` 和每个拉取请求都在 Ubuntu 和 Windows、Python 3.10 与 3.12 上运行测试、结构验证和发布检查。
 - 新增 [贡献说明](CONTRIBUTING.md) 和本更新记录。

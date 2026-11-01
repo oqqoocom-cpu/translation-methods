@@ -1,5 +1,5 @@
 {
-  "version": "0.6.0",
+  "version": "0.7.0",
   "scope": "generic-methods-only",
   "self_excluded": true,
   "files": [
@@ -10,23 +10,23 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "228f108f5adb30efbbfc8a1d49ee8a7a6623c54add1a86e72ef8dc5e447da138",
-      "size_bytes": 747
+      "sha256": "b3cb12778085073695d4e71d0b82219c31b56f851d4d52e5ed4d6a6e5d54e0fb",
+      "size_bytes": 755
     },
     {
       "path": ".gitignore",
-      "sha256": "a1cdb17b51974438eac5bceed67fc6d0913c8ddbb26f295137526f9360bc28e6",
-      "size_bytes": 196
+      "sha256": "7c2b35cb48b1765096033886420fbea3ef4a805d59160c7839872f3663212526",
+      "size_bytes": 202
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "461c8b5fe80b2a30bd306c7b1f56bcb5a9ac9a1b3064d07db2addb6c01da8946",
-      "size_bytes": 3984
+      "sha256": "c2a6e30b244b788dbdbbd8b5c52205ae5a7a8f42570e929a0aee4c57cfaa47e2",
+      "size_bytes": 5413
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "27780d559c8b39e5ef6a72de4f7e0c4b67f4e3c9f79106bb475086466bbef26d",
-      "size_bytes": 2022
+      "sha256": "5057f6c248329082c9f7f4db301e294ada3febdb2269b3c40445d968cba4c3ac",
+      "size_bytes": 2029
     },
     {
       "path": "LICENSE-STATUS.md",
@@ -50,23 +50,23 @@
     },
     {
       "path": "PUBLICATION.md",
-      "sha256": "7b1e2b8b88e2a39d417e89f716c8e805d4745dcde45239baab10cea15b690312",
-      "size_bytes": 2196
+      "sha256": "0d101084b464695a12141c2f71e091f76de73f7e7cb015afc941f74bf606e492",
+      "size_bytes": 2203
     },
     {
       "path": "QUICKSTART.md",
-      "sha256": "727dc36d1b2352fe2d71f24d95157c8a3b8b18d6058252227bf4c357ac47b425",
-      "size_bytes": 6220
+      "sha256": "73fe53c0085d2e25f2648432427f60992c1e93ee69dbbe7a79ca177dd9034b81",
+      "size_bytes": 10270
     },
     {
       "path": "README.md",
-      "sha256": "fef717b27ce0fc27a965bdfe0215851ca57c1bfee61182f63539576c76c2d1d0",
-      "size_bytes": 5187
+      "sha256": "5c4edefc663f0d95a1dcaf7baa7d14f671e363c394025549eae70f915c0a6d16",
+      "size_bytes": 5723
     },
     {
       "path": "REFERENCES.md",
-      "sha256": "a6dee0406c53a9f0d2a5863451832ac87b1d60f7a61a22bc75cab161392b2dff",
-      "size_bytes": 3044
+      "sha256": "6f8ad492128fc3e8255351a36473be699a957382d6a0fc7597e713043ce42644",
+      "size_bytes": 3351
     },
     {
       "path": "RELEASE-CHECKLIST.md",
@@ -80,8 +80,8 @@
     },
     {
       "path": "docs/02_项目生命周期.md",
-      "sha256": "98a7167e022955e83a681d82eab53cf6c541e52f1ab8d68ad6e147f169daa5ae",
-      "size_bytes": 3453
+      "sha256": "d9121f7b3a13a868f61c232ff6317d59c8d57f51196e3b7ed27ef4115fa2efe2",
+      "size_bytes": 3642
     },
     {
       "path": "docs/03_术语与实体治理.md",
@@ -90,8 +90,8 @@
     },
     {
       "path": "docs/04_质量控制与回归.md",
-      "sha256": "8459257db140107f53a8378fc507cc13773f4bb8bb8eb7357598d86d70d2bd46",
-      "size_bytes": 6310
+      "sha256": "ef62c16a00a2ce9d950c1cf92dc41b1c2abaedc2cad6a13d455616112353a742",
+      "size_bytes": 6842
     },
     {
       "path": "docs/05_多模型协作.md",
@@ -100,8 +100,8 @@
     },
     {
       "path": "docs/06_数据模型与目录.md",
-      "sha256": "bf9d2ace0ab3d73eafe8c6bfef8d9d1e718c8a1d1d989257da36cec04c5af408",
-      "size_bytes": 3097
+      "sha256": "ec91ad8c54bebba1b670e48a67c6692136bca2234bea0df43ba833e353929fff",
+      "size_bytes": 3349
     },
     {
       "path": "docs/07_排版与交付.md",
@@ -179,9 +179,14 @@
       "size_bytes": 2978
     },
     {
+      "path": "examples/units/source.txt",
+      "sha256": "3d9c1271ef7d9889c6b87de2c692e456f39cf17cfff2bf6796a5c285b625f64e",
+      "size_bytes": 2058
+    },
+    {
       "path": "examples/walkthrough.md",
-      "sha256": "930e03dd59c92454ab8f8cb86d7109e2fac7a52b8c34978b3239822f3f0fd71e",
-      "size_bytes": 9938
+      "sha256": "9c32ef5f1814919911403396527eea992804fc633f97ddfff6afa9fdfac4fd48",
+      "size_bytes": 10451
     },
     {
       "path": "registry/public.registry.json",
@@ -290,13 +295,23 @@
     },
     {
       "path": "tests/test_check_translation.py",
-      "sha256": "d3e72107306dbb3f3e657d6c8170cdd4250685b8ad05f5254017f7e43438aed0",
-      "size_bytes": 26007
+      "sha256": "2d0a31523f3d3a2b784a70c3348872c775572d69ef942ea87ee406adfd32b3ba",
+      "size_bytes": 27808
+    },
+    {
+      "path": "tests/test_export_bilingual.py",
+      "sha256": "0b25c8d15319c5cafaa97181b98a0d1123f5d203043f53ebfdea8f4262c06d9e",
+      "size_bytes": 14313
+    },
+    {
+      "path": "tests/test_make_units.py",
+      "sha256": "b87b172de0cdac24998be37845e7c5b989e8ebb47a6f08423f087677f7408648",
+      "size_bytes": 11565
     },
     {
       "path": "tests/test_public_assets.py",
-      "sha256": "6b49f631125e85c88bb7d0163904e7206118cd7ade3f08e8b3370864c91ff77e",
-      "size_bytes": 25321
+      "sha256": "b3a4d6de9e490bace942eb4e7d3916124b12e8552fdd46d39077e2ecbf469e81",
+      "size_bytes": 25756
     },
     {
       "path": "tests/test_release.py",
@@ -310,8 +325,18 @@
     },
     {
       "path": "tools/check_translation.py",
-      "sha256": "e81a787d22ec0d98bb2a8913975da3fe77ad5b973569eb7145b2f8a6bd299024",
-      "size_bytes": 24246
+      "sha256": "23567c2562a02d08e2a28fc5731bb2361dade658f14dcf2d0224831ad4feb4de",
+      "size_bytes": 24937
+    },
+    {
+      "path": "tools/export_bilingual.py",
+      "sha256": "7b2b3d3494ca5116063a2f85853e79bfab00e4e87424f79b5f1e2e0e72aa6a16",
+      "size_bytes": 6609
+    },
+    {
+      "path": "tools/make_units.py",
+      "sha256": "9b77e33d77b4f63706ea62da79a999fa3e6ec1b9d7412a4b50455fa105a16e32",
+      "size_bytes": 7493
     },
     {
       "path": "tools/sync_registry.py",

@@ -217,6 +217,33 @@ class ProtectedTests(unittest.TestCase):
         self.assertEqual(extract_numbers("\uff11\uff14 \u0661\u0664"), Counter({"14": 2}))
         self.assertEqual(extract_numbers("see [12] and https://example.org/2026/10 and 3"), Counter({"3": 1}))
 
+    def test_chinese_count_words(self):
+        wan, wan_t, yi, yi_t = "\u4e07", "\u842c", "\u4ebf", "\u5104"
+        for text, expected in [
+            ("3.5" + wan, "35000"), ("1.2" + yi, "120000000"), ("2" + wan + yi, "2000000000000"),
+            ("1.2" + wan + yi, "1200000000000"), ("3" + wan_t, "30000"), ("1.5" + yi_t, "150000000"),
+            ("3.5 " + wan, "35000"), ("1,250" + wan, "12500000"), ("0.05" + wan, "500"),
+        ]:
+            with self.subTest(text=ascii(text)):
+                self.assertEqual(extract_numbers(text), Counter({expected: 1}))
+        self.assertEqual(extract_numbers("1,5" + wan, ","), Counter({"15000": 1}))
+        # Only a count word right after a digit is read, so in "3 wan 5 qian" the 5 stays 5. The word for
+        # 1,000 is left out because it also starts the words for km and kg; Chinese numerals are not read.
+        self.assertEqual(extract_numbers("3" + wan + "5\u5343"), Counter({"30000": 1, "5": 1}))
+        self.assertEqual(extract_numbers("5\u5343\u7c73"), Counter({"5": 1}))
+        self.assertEqual(extract_numbers("\u5341" + wan), Counter())
+
+    def test_count_word_compared_by_value(self):
+        source = doc("source", "en", "Raise 35,000 credits.")
+        same = doc("target", "zh", "\u7b79\u96c63.5\u4e07\u79ef\u5206\u3002")
+        self.assertEqual(run_checks(source, same, checks=["numbers"])["findings"], [])
+        changed = doc("target", "zh", "\u7b79\u96c63.6\u4e07\u79ef\u5206\u3002")
+        result = run_checks(source, changed, checks=["numbers"])
+        self.assertEqual(codes(result), [("UNIT-001", "number-missing"), ("UNIT-001", "number-extra")])
+        self.assertEqual(
+            [item["detail"] for item in result["findings"]], [{"value": "35000", "count": 1}, {"value": "36000", "count": 1}],
+        )
+
     def test_numbers_compared_by_value_and_count(self):
         source = doc("source", "en", "Pay 1,250 credits within 14 days.", "Use 2.5 kg.")
         target = doc("target", "de", "Zahle 1250 Punkte binnen 15 Tagen.", "Nimm 2,5 kg.", decimal_mark=",")

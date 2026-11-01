@@ -553,6 +553,11 @@ class DependencyTests(unittest.TestCase):
                 ("validate_assets.py", [], 1),
                 ("sync_registry.py", [str(ROOT / "registry/public.registry.json"), "--snapshot", str(output),
                                       "--project-id", "DEMO-NEW", "--phase", "intake", "--tier", "light"], 1),
+                ("make_units.py", ["--input", str(units / "source.txt"), "--output", str(output),
+                                   "--language", "en", "--version", "v1"], 1),
+                ("export_bilingual.py", ["--source", str(units / "source.json"), "--target",
+                                         str(units / "draft-2.json"), "--output", str(output),
+                                         "--format", "markdown"], 1),
             ]:
                 with self.subTest(tool=tool):
                     result = subprocess.run(

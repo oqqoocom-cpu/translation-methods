@@ -1,6 +1,6 @@
 # 通用翻译方法与工具
 
-版本：0.6.0，规则注册表仍为 0.4.0。仓库名称：`translation-methods`。许可证：代码采用 MIT，文档、模板和虚构示例采用 CC BY 4.0，详见 [许可证说明](LICENSE.md)。
+版本：0.7.0，规则注册表仍为 0.4.0。仓库名称：`translation-methods`。许可证：代码采用 MIT，文档、模板和虚构示例采用 CC BY 4.0，详见 [许可证说明](LICENSE.md)。
 
 本库整理可复用的翻译工作流、术语管理、质量控制、译审提示词、记录模板与检查工具，面向一般文档、技术资料、商务文本、文学与学术材料等翻译任务，不限于学术翻译。
 
@@ -32,18 +32,20 @@
 
 ## 工具范围
 
-要求 Python 3.10 或更高版本，结构验证依赖 `jsonschema`。建议先按 [快速上手](QUICKSTART.md) 在仓库外建立虚拟环境；未使用虚拟环境时，macOS 和 Linux 用 `python3` 代替 `python`。`validate_assets.py` 验证记录结构和部分状态约束；`check_translation.py` 按稳定单元对照源文与译文，机械检查结构、数字、单位符号、标记和已裁决的术语。工具不能核实权威来源、专家能力或语义正确性，也不能自动授予翻译、传播或调用外部服务的权限。
+要求 Python 3.11 或更高版本，结构验证依赖 `jsonschema`。建议先按 [快速上手](QUICKSTART.md) 在仓库外建立虚拟环境；未使用虚拟环境时，macOS 和 Linux 用 `python3` 代替 `python`。`validate_assets.py` 验证记录结构和部分状态约束；`make_units.py` 把 UTF-8 纯文本或 Markdown 切分为单元文件；`check_translation.py` 按稳定单元对照源文与译文，机械检查结构、数字、单位符号、标记和已裁决的术语；`export_bilingual.py` 把源文与译文导出为 Markdown 或 CSV 对照表。工具不能核实权威来源、专家能力或语义正确性，也不能自动授予翻译、传播或调用外部服务的权限。
 
 ```powershell
 python -m pip install -r requirements.txt
 python -B -m unittest discover -s tests -v
 python -B tools/validate_assets.py
 python -B tools/check_release.py
+python -B tools/make_units.py --input examples/units/source.txt --output generated/source.units.json --language en --version demo-source-v1 --prefix UNIT-DEMO --synthetic
 python -B tools/check_translation.py --source examples/units/source.json --target examples/units/draft-2.json --glossary examples/term.synthetic.json --glossary examples/entity.synthetic.json
+python -B tools/export_bilingual.py --source examples/units/source.json --target examples/units/draft-2.json --output generated/bilingual.md
 python -B tools/sync_registry.py registry/public.registry.json --markdown generated/registry.md --snapshot generated/application.json --project-id DEMO-NEW --phase intake --tier standard
 ```
 
-输出必须是尚不存在的新文件。快照只包含所选流程等级的规则，其中的 `pending` 是“待验收”，不是已通过。对照检查的每条发现都是待人判断的候选问题；没有发现只说明这些机械检查未报错，不表示译文合格。工具不会调用云端翻译服务，也不提供 API 密钥配置。
+输出必须是尚不存在的新文件。快照只包含所选流程等级的规则，其中的 `pending` 是“待验收”，不是已通过。对照检查的每条发现都是待人判断的候选问题；没有发现只说明这些机械检查未报错，不表示译文合格。对照表只是阅读副本，修改仍在单元文件中进行。工具不会调用云端翻译服务，也不提供 API 密钥配置。
 
 ## 发布边界
 
@@ -51,4 +53,4 @@ python -B tools/sync_registry.py registry/public.registry.json --markdown genera
 
 目录只包含通用方法内容，可在本地初始化全新的独立 Git；不得导入任何私有项目的 Git 历史。暂存内容可用 `python -B tools/check_release.py --staged` 核验；该检查不审查完整提交历史，不能用于把旧私有仓库转为公开。
 
-发布和日常更新的步骤见 [发布与更新](PUBLICATION.md)，版本变化见 [更新记录](CHANGELOG.md)，参与修改见 [贡献说明](CONTRIBUTING.md)。推送到 `main` 和每个拉取请求都由 GitHub Actions 在 Ubuntu 和 Windows、Python 3.10 与 3.12 上重跑测试和检查。本库不声称已建成专家基准集、已实现原书全自动翻译或已优于某个翻译平台。详见 [许可证说明](LICENSE.md)、[许可证状态](LICENSE-STATUS.md) 与 [发布检查表](RELEASE-CHECKLIST.md)。
+发布和日常更新的步骤见 [发布与更新](PUBLICATION.md)，版本变化见 [更新记录](CHANGELOG.md)，参与修改见 [贡献说明](CONTRIBUTING.md)。推送到 `main` 和每个拉取请求都由 GitHub Actions 在 Ubuntu 和 Windows、Python 3.11、3.14 与 3.15 上重跑测试和检查。本库不声称已建成专家基准集、已实现原书全自动翻译或已优于某个翻译平台。详见 [许可证说明](LICENSE.md)、[许可证状态](LICENSE-STATUS.md) 与 [发布检查表](RELEASE-CHECKLIST.md)。

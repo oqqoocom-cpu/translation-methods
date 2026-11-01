@@ -18,7 +18,7 @@
    ```
 
 4. 对照 [发布检查表](RELEASE-CHECKLIST.md) 复核后提交并推送。
-5. 确认 GitHub Actions 在 Ubuntu 和 Windows、Python 3.10 与 3.12 上全部通过。
+5. 确认 GitHub Actions 在 Ubuntu 和 Windows、Python 3.11、3.14 与 3.15 上全部通过。
 
 ## 发布范围
 

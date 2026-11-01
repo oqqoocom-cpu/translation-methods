@@ -4,7 +4,7 @@
 
 ## 案例
 
-虚构的北园议事会有一份《共用果园规则》，英文，约 360 词，共 12 条，见 [源文单元](units/source.json)。需求方要求译成中文，供内部完整阅读。用途属于 B 级审校交付，选用标准级流程，适用 25 条规则。每一条作为一个稳定单元，编号为 `UNIT-DEMO-001` 至 `UNIT-DEMO-012`。
+虚构的北园议事会有一份《共用果园规则》，英文，约 360 词，共 12 条，原文见 [纯文本](units/source.txt)，切分结果见 [源文单元](units/source.json)。需求方要求译成中文，供内部完整阅读。用途属于 B 级审校交付，选用标准级流程，适用 25 条规则。每一条作为一个稳定单元，编号为 `UNIT-DEMO-001` 至 `UNIT-DEMO-012`。
 
 ## 1. 接收与定级
 
@@ -27,6 +27,14 @@ python -B tools/sync_registry.py registry/public.registry.json --snapshot genera
 ## 3. 源层基线
 
 原件只读保存并记录字节哈希，12 条与 12 个稳定单元一一对应。材料没有固定页面，原文定位使用条款编号，不虚构页码。扫描确认全文为英语电子文本，没有非拉丁文字、抽取缺损或表格。`MULTI-001` 照常适用，这份扫描记录就是它的检查证据。
+
+全文存为 UTF-8 纯文本，条与条之间空一行，再切分为单元文件：
+
+```powershell
+python -B tools/make_units.py --input examples/units/source.txt --output generated/orchard-source.json --language en --version demo-source-v1 --prefix UNIT-DEMO --synthetic
+```
+
+结果为 12 个单元，编号和文本与源文单元一致。工具按行号定位，本例在保存基线前改用条款编号；基线保存后编号与定位不再变动。
 
 扫描结果和项目用途确定后，由裁决 `DEC-DEMO-002` 把四条条件规则判为不适用：`MULTI-002` 和 `MULTI-003` 因为没有非拉丁文字或平行文本，`QA-003` 因为没有表格，`BENCH-002` 因为本项目不作质量或优劣结论。四条仍留在快照中，各自写明理由、裁决和证据。示例目录每类只收一份记录，`DEC-DEMO-002` 只在本文说明。
 

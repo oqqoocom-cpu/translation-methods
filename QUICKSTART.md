@@ -21,7 +21,7 @@
 
 ## 先运行虚构示例
 
-要求 Python 3.10 或更高版本。虚拟环境建在仓库外，否则发布检查会把其中文件视为未知文件。在方法库目录运行以下命令，在上一级目录建立并激活虚拟环境。Windows PowerShell：
+要求 Python 3.11 或更高版本。虚拟环境建在仓库外，否则发布检查会把其中文件视为未知文件。在方法库目录运行以下命令，在上一级目录建立并激活虚拟环境。Windows PowerShell：
 
 ```powershell
 python -m venv ..\tm-venv
@@ -44,7 +44,7 @@ python -B tools/validate_assets.py
 python -B tools/check_release.py
 ```
 
-缺少依赖时，`validate_assets.py`、`check_translation.py` 和 `sync_registry.py` 只打印一行安装提示，不生成输出文件：`missing_dependency=jsonschema; run: python -m pip install -r requirements.txt`。
+缺少依赖时，`validate_assets.py`、`make_units.py`、`check_translation.py`、`export_bilingual.py` 和 `sync_registry.py` 只打印一行安装提示，不生成输出文件：`missing_dependency=jsonschema; run: python -m pip install -r requirements.txt`。
 
 `validate_assets.py` 验证注册表和虚构示例的结构与部分状态依赖。`check_release.py` 检查仓库发布白名单、哈希、链接和已知风险模式；出现未知文件即退回检查，不自动删除。
 
@@ -58,6 +58,24 @@ python -B tools/sync_registry.py registry/public.registry.json --markdown genera
 
 输出路径必须尚不存在。快照只包含所选等级的规则，每条规则初始为待核状态，适用性、例外、证据和阶段验收须在私有项目记录。演示输出留在忽略目录，发布检查会把它视为未知文件；演示完成后自行保管到私有项目，不把生成物加入公开清单。
 
+## 切分源文
+
+源文先存为 UTF-8 纯文本或 Markdown，再用切分工具生成单元文件：
+
+```powershell
+python -B tools/make_units.py --input examples/units/source.txt --output generated/source.units.json --language en --version demo-source-v1 --prefix UNIT-DEMO --synthetic
+```
+
+默认按空行分段，每段一个单元；`--split line` 让每个非空行各成一个单元。后缀为 `.md` 或 `.markdown` 的文件按 Markdown 读取，标题行和围栏代码块各成一个单元，代码块内部不再切分；`--format text` 或 `--format markdown` 可改变读法。编号按出现顺序从“前缀-001”开始，`--prefix` 默认为 `UNIT`；`locator` 记录单元起始行。屏幕只显示单元数、读法、切分方式、最长单元行数和写入状态，不回显文本。示例切出 12 个单元，编号和文本与 [源文单元](examples/units/source.json) 一致，定位则是行号，不是条款编号。
+
+`--language` 和 `--version` 必填；`--role` 默认为 `source`，中转语文本标为 `pivot`。源文以逗号作小数点时加 `--decimal-mark ","`。`--synthetic` 只用于虚构示例。
+
+切分结果存为基线后，编号即固定。之后发现源文错误，另建源层版本并登记差异，不重新切分：多出或少了一处段落分隔，其后的编号就会整体错位，已有译文和记录都对不上。长篇材料按章分别切分，每章用不同前缀，例如 `CH01`。
+
+PDF、Word 等文件先导出为 UTF-8 纯文本，核对缺漏、乱码和断行后再切分。工具只按 UTF-8 读取，有无 BOM 均可，不猜测编码；GBK、UTF-16 等文件通常无法解码。解码失败或输出文件已存在时，屏幕显示 `make_units_failed=` 和错误类别，退出码为 1，不写出文件；参数错误时退出码为 2。段落之间没有空行时，整篇会成为一个单元，`max_unit_lines` 明显偏大；这时补空行，或改用 `--split line`。
+
+译文也可用 `--role target` 切分，但只有段落与源文一一对应时编号才能对齐；否则按源文编号逐条写入译文。
+
 ## 对照源文与译文
 
 源文和译文各存一份单元文件，结构见 [units Schema](schemas/units.schema.json)。两份文件使用相同的稳定单元编号，检查器按编号对齐，不靠行号或段落顺序猜测对应关系。
@@ -70,7 +88,25 @@ python -B tools/check_translation.py --source examples/units/source.json --targe
 
 示例中 `draft-1` 的退出码为 1，报出 2 条术语发现，都在 `UNIT-DEMO-001`；换成 `draft-2` 时退出码为 0。原命令再次运行会因报告已存在返回 2，须换一个新文件名。运行发布检查前，先把 `generated/` 移出仓库或删除。
 
-检查只作机械比对。“km”译作“公里”、阿拉伯数字“14”写成“十四”，都会报为缺失，是否属于合理改写由人判断；确认的问题另行登记，不把候选发现直接计入问题统计。源文或译文以逗号作小数点时，在单元文件中设置 `decimal_mark`。检查范围与未覆盖的内容见 [质量控制与回归](docs/04_质量控制与回归.md)。
+检查只作机械比对。“km”译作“公里”、阿拉伯数字“14”写成“十四”，都会报为缺失，是否属于合理改写由人判断；“35,000”写成“3.5万”按同一数值比较，不报缺失。确认的问题另行登记，不把候选发现直接计入问题统计。源文或译文以逗号作小数点时，在单元文件中设置 `decimal_mark`。检查范围与未覆盖的内容见 [质量控制与回归](docs/04_质量控制与回归.md)。
+
+## 导出对照表
+
+审校时可把源文与译文导出为对照表：
+
+```powershell
+python -B tools/export_bilingual.py --source examples/units/source.json --target examples/units/draft-2.json --output generated/bilingual.md
+```
+
+对照表按单元编号把源文和译文排在同一行，列为编号、定位、源文和译文；行序跟随源文，只在译文中出现的单元排在最后，缺失的一侧留空。输出后缀为 `.md` 或 `.markdown` 时生成 Markdown，为 `.csv` 时生成 CSV，其他后缀须用 `--format` 指定。屏幕只显示行数、对齐数、译文缺失数、译文多出数、格式和写入状态，不回显文本；示例导出 12 行，全部对齐。
+
+Markdown 表格中，`<`、`>`、`&`、`|` 和反斜杠转为字符实体，换行转为 `<br>`，文本不会破坏表格结构。CSV 采用 UTF-8 加 BOM 和 CRLF 换行，每个单元格都加引号；以 `=`、`+`、`-`、`@` 或其全角形式、制表符、回车、换行开头的单元格前加撇号，防止电子表格软件把内容当作公式执行，做法参照 [OWASP 的 CSV 注入说明](https://owasp.org/www-community/attacks/CSV_Injection)。
+
+源文与译文角色颠倒、同一文件内编号重复、输入无效或输出文件已存在时，屏幕显示 `export_failed=` 和错误类别，退出码为 1，不写出文件；参数错误时退出码为 2。
+
+对照表只是阅读副本。审校意见写回单元文件后重新导出，不从对照表反向导入。
+
+限制：在 Excel 等电子表格软件中保存 CSV 后，引号和撇号可能被去掉，再次打开时公式防护已经失效；不要用保存后的文件覆盖导出文件，需要时从单元文件重新导出。Markdown 对照表中，行内代码里的字符实体按原样显示，例如 `&lt;` 不还原为 `<`。
 
 ## 哪些事情仍需人完成
 

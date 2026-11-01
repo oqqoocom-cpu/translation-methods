@@ -25,7 +25,7 @@ except ImportError:
     from sync_registry import write_new_outputs
     from validate_assets import missing_dependency_hint, unique_object, validate
 
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 CHECKS = ("structure", "numbers", "symbols", "markers", "terms")
 FAMILY = {
     "structure": "STRUCTURE", "numbers": "PROTECTED", "symbols": "PROTECTED", "markers": "PROTECTED",
@@ -62,11 +62,19 @@ SYMBOL_RE = re.compile(
     + "|".join(map(re.escape, SYMBOLS_SINGLE)) + "))(?![A-Za-z])"
 )
 
+# Chinese count words written after a digit, in simplified and traditional script,
+# with their power of ten: "3.5\u4e07" is read as 35000.
+SCALES = {"\u4e07\u4ebf": 12, "\u842c\u5104": 12, "\u4e07": 4, "\u842c": 4, "\u4ebf": 8, "\u5104": 8}
+
 
 def _number_re(decimal_mark: str) -> re.Pattern[str]:
     group = re.escape("," if decimal_mark == "." else ".")
     mark = re.escape(decimal_mark)
-    return re.compile(rf"(?<![0-9])(?:[0-9]{{1,3}}(?:{group}[0-9]{{3}})+(?![0-9])|[0-9]+)(?:{mark}[0-9]+)?")
+    scale = "|".join(sorted(SCALES, key=len, reverse=True))
+    return re.compile(
+        rf"(?<![0-9])(?P<number>(?:[0-9]{{1,3}}(?:{group}[0-9]{{3}})+(?![0-9])|[0-9]+)(?:{mark}[0-9]+)?)"
+        rf"(?: ?(?P<scale>{scale}))?"
+    )
 
 
 NUMBER_RE = {mark: _number_re(mark) for mark in ".,"}
@@ -156,15 +164,22 @@ def _scan_markers(text: str) -> tuple[Counter, str]:
     return found, "".join(chars)
 
 
-def _canonical_number(raw: str, decimal_mark: str) -> str:
+def _canonical_number(raw: str, decimal_mark: str, scale: str | None = None) -> str:
     group = "," if decimal_mark == "." else "."
     whole, _, fraction = raw.replace(group, "").partition(decimal_mark)
+    if scale:
+        # Move the decimal point by the count word's power of ten, on the digit string, so it stays exact.
+        places = SCALES[scale]
+        fraction = fraction.ljust(places, "0")
+        whole, fraction = whole + fraction[:places], fraction[places:]
     whole, fraction = whole.lstrip("0") or "0", fraction.rstrip("0")
     return whole + "." + fraction if fraction else whole
 
 
 def _count_numbers(masked: str, decimal_mark: str) -> Counter:
-    return Counter(_canonical_number(m.group(), decimal_mark) for m in NUMBER_RE[decimal_mark].finditer(masked))
+    return Counter(
+        _canonical_number(m["number"], decimal_mark, m["scale"]) for m in NUMBER_RE[decimal_mark].finditer(masked)
+    )
 
 
 def _count_symbols(masked: str) -> Counter:

@@ -13,6 +13,7 @@ render/
 *.pdf
 *.docx
 *.xlsx
+*.csv
 *.zip
 *.ttf
 *.otf
