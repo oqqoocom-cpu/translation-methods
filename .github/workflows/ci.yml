@@ -29,4 +29,5 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - run: python -B -m unittest discover -s tests -v
       - run: python -B tools/validate_assets.py
+      - run: python -B tools/check_versions.py
       - run: python -B tools/check_release.py

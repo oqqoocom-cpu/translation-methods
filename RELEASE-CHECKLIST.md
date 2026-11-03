@@ -16,7 +16,7 @@
 ## 许可与版本
 
 - [ ] 维护者署名和代码、文档、模板的双许可证范围经确认，并与 [许可证说明](LICENSE.md) 一致。
-- [ ] [更新记录](CHANGELOG.md)、README 版本行、发布清单的 `version` 和 `tools/check_translation.py` 的 `VERSION` 一致。
+- [ ] `python -B tools/check_versions.py` 通过：[更新记录](CHANGELOG.md)、README 版本行、发布清单的 `version` 和 `tools/check_translation.py` 的 `VERSION` 一致。
 
 ## 检查与推送
 

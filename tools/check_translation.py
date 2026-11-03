@@ -25,7 +25,7 @@ except ImportError:
     from sync_registry import write_new_outputs
     from validate_assets import missing_dependency_hint, unique_object, validate
 
-VERSION = "0.8.0"
+VERSION = "0.8.1"
 CHECKS = ("structure", "numbers", "symbols", "markers", "terms")
 FAMILY = {
     "structure": "STRUCTURE", "numbers": "PROTECTED", "symbols": "PROTECTED", "markers": "PROTECTED",

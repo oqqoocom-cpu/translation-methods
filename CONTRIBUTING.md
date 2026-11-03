@@ -21,6 +21,7 @@
    ```powershell
    python -B -m unittest discover -s tests -v
    python -B tools/validate_assets.py
+   python -B tools/check_versions.py
    python -B tools/check_release.py
    ```
 

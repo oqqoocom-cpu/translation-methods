@@ -1,5 +1,5 @@
 {
-  "version": "0.8.0",
+  "version": "0.8.1",
   "scope": "generic-methods-only",
   "self_excluded": true,
   "files": [
@@ -10,8 +10,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "b3cb12778085073695d4e71d0b82219c31b56f851d4d52e5ed4d6a6e5d54e0fb",
-      "size_bytes": 755
+      "sha256": "10c1abed9ce0a2ec41d5579189041a56533ebc8ad11355e482c42d5eb4695646",
+      "size_bytes": 802
     },
     {
       "path": ".gitignore",
@@ -20,13 +20,13 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "3c048472b35951fafff136cd5ef68490d464560314d6648822f7c8693690416d",
-      "size_bytes": 6083
+      "sha256": "1f52c5928f38e83ea730a2ff0c761eaeaf34259a875bdcb72923c577c1d386f4",
+      "size_bytes": 6793
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "5057f6c248329082c9f7f4db301e294ada3febdb2269b3c40445d968cba4c3ac",
-      "size_bytes": 2029
+      "sha256": "6e60eb6680d56ab72809d15127819d99ae15bd61b4d5a54b68b0d3d8d8e9e952",
+      "size_bytes": 2066
     },
     {
       "path": "LICENSE-STATUS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "PUBLICATION.md",
-      "sha256": "0d101084b464695a12141c2f71e091f76de73f7e7cb015afc941f74bf606e492",
-      "size_bytes": 2203
+      "sha256": "8ae166c1506ffbfb1fc302e67bdefde865703a5c85b5b3738e880bc17239411a",
+      "size_bytes": 2240
     },
     {
       "path": "QUICKSTART.md",
@@ -60,7 +60,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "5101821b0cf087930e77f458641b76b5513515cab9a6e4f134afcc8752165078",
+      "sha256": "1a8427cdcd7976164a80d41216fa33e17736a256f394f8428cdb5d9b031ecc32",
       "size_bytes": 5723
     },
     {
@@ -70,8 +70,8 @@
     },
     {
       "path": "RELEASE-CHECKLIST.md",
-      "sha256": "3f94c637cf8add0bb0fdb6fbbb669874766bce96daba987abfbb017678348ca6",
-      "size_bytes": 2143
+      "sha256": "54be373adc1a399a4bfeea9a9332f1c8a1a860650c064394847a269992880cc4",
+      "size_bytes": 2188
     },
     {
       "path": "docs/01_项目定位与边界.md",
@@ -90,8 +90,8 @@
     },
     {
       "path": "docs/04_质量控制与回归.md",
-      "sha256": "d49780efae00288824d14e7eae1e47535d028bb5eb05a9bb4d119cf818e6fdd3",
-      "size_bytes": 7733
+      "sha256": "254206c0c2cdf7c2c18d7d6ef9a3caebb09e78f4649069154dfe0c3b8d3a1d34",
+      "size_bytes": 8897
     },
     {
       "path": "docs/05_多模型协作.md",
@@ -309,6 +309,11 @@
       "size_bytes": 11565
     },
     {
+      "path": "tests/test_number_boundaries.py",
+      "sha256": "cb69dc6bad95274a2cba55900b216c75463127a655bf75f86ee2581da204b86c",
+      "size_bytes": 1407
+    },
+    {
       "path": "tests/test_public_assets.py",
       "sha256": "b3a4d6de9e490bace942eb4e7d3916124b12e8552fdd46d39077e2ecbf469e81",
       "size_bytes": 25756
@@ -319,14 +324,24 @@
       "size_bytes": 5503
     },
     {
+      "path": "tests/test_versions.py",
+      "sha256": "3b2f9b04487ed4b93de85e2ba186b01206825aac5972442460e3b7ed4e368951",
+      "size_bytes": 2723
+    },
+    {
       "path": "tools/check_release.py",
       "sha256": "bed0e18d5f7b5c384437ae549ce161ff582e9f1740a1ef2ae15917716f039960",
       "size_bytes": 6402
     },
     {
       "path": "tools/check_translation.py",
-      "sha256": "0bb7ffed2d0a96e5a709650821e37235772c1ef07faedac57e0efb674ac7e3de",
+      "sha256": "de5fbab9a2434859681fa27131581e43b7ae6af99dad8bf6fe28b7b7d1092723",
       "size_bytes": 26286
+    },
+    {
+      "path": "tools/check_versions.py",
+      "sha256": "8828675bfafa1296c065d4307b8abd7b1409245d35369203f845f4f3dfee39c7",
+      "size_bytes": 2234
     },
     {
       "path": "tools/export_bilingual.py",
